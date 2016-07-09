@@ -8,20 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */; };
-		5D769ED11D2FAED800DCA6DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769ED01D2FAED800DCA6DC /* ViewController.swift */; };
 		5D769ED41D2FAED800DCA6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED21D2FAED800DCA6DC /* Main.storyboard */; };
 		5D769ED61D2FAED800DCA6DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED51D2FAED800DCA6DC /* Assets.xcassets */; };
 		5D769ED91D2FAED800DCA6DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED71D2FAED800DCA6DC /* LaunchScreen.storyboard */; };
+		5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EE11D2FBBC700DCA6DC /* Constants.swift */; };
+		5D769EE61D300E9100DCA6DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */; };
+		5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */; };
+		CF275176905ACBEB8A04A7C7 /* Pods_QuickChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5D769ECB1D2FAED800DCA6DC /* QuickChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D769ED01D2FAED800DCA6DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5D769ED31D2FAED800DCA6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D769ED51D2FAED800DCA6DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D769ED81D2FAED800DCA6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D769EDA1D2FAED800DCA6DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D769EE11D2FBBC700DCA6DC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.debug.xcconfig"; sourceTree = "<group>"; };
+		F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +37,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF275176905ACBEB8A04A7C7 /* Pods_QuickChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3843D91712E54EFBD439504F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */,
+				F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5D769EC21D2FAED800DCA6DC = {
 			isa = PBXGroup;
 			children = (
 				5D769ECD1D2FAED800DCA6DC /* QuickChat */,
 				5D769ECC1D2FAED800DCA6DC /* Products */,
+				3843D91712E54EFBD439504F /* Pods */,
+				867A85827C7587B17A1670CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +74,56 @@
 		5D769ECD1D2FAED800DCA6DC /* QuickChat */ = {
 			isa = PBXGroup;
 			children = (
+				5D769EE01D2FBBB800DCA6DC /* Constants */,
+				5D769EEB1D3122BC00DCA6DC /* Model */,
+				5D769EEA1D3122B700DCA6DC /* Views */,
+				5D769EE91D3122B000DCA6DC /* Controllers */,
 				5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */,
-				5D769ED01D2FAED800DCA6DC /* ViewController.swift */,
-				5D769ED21D2FAED800DCA6DC /* Main.storyboard */,
 				5D769ED51D2FAED800DCA6DC /* Assets.xcassets */,
-				5D769ED71D2FAED800DCA6DC /* LaunchScreen.storyboard */,
 				5D769EDA1D2FAED800DCA6DC /* Info.plist */,
+				5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */,
 			);
 			path = QuickChat;
+			sourceTree = "<group>";
+		};
+		5D769EE01D2FBBB800DCA6DC /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				5D769EE11D2FBBC700DCA6DC /* Constants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		5D769EE91D3122B000DCA6DC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5D769EEA1D3122B700DCA6DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5D769ED21D2FAED800DCA6DC /* Main.storyboard */,
+				5D769ED71D2FAED800DCA6DC /* LaunchScreen.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		5D769EEB1D3122BC00DCA6DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		867A85827C7587B17A1670CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +133,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D769EDD1D2FAED800DCA6DC /* Build configuration list for PBXNativeTarget "QuickChat" */;
 			buildPhases = (
+				CF41F22A10FDDCE0D212DBB9 /* 📦 Check Pods Manifest.lock */,
 				5D769EC71D2FAED800DCA6DC /* Sources */,
 				5D769EC81D2FAED800DCA6DC /* Frameworks */,
 				5D769EC91D2FAED800DCA6DC /* Resources */,
+				7C4C781914B8FEDDF3D8A1D7 /* 📦 Embed Pods Frameworks */,
+				37DA57922D85CEB1165C7359 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -124,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D769ED91D2FAED800DCA6DC /* LaunchScreen.storyboard in Resources */,
+				5D769EE61D300E9100DCA6DC /* GoogleService-Info.plist in Resources */,
 				5D769ED61D2FAED800DCA6DC /* Assets.xcassets in Resources */,
 				5D769ED41D2FAED800DCA6DC /* Main.storyboard in Resources */,
 			);
@@ -131,13 +197,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		37DA57922D85CEB1165C7359 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C4C781914B8FEDDF3D8A1D7 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF41F22A10FDDCE0D212DBB9 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5D769EC71D2FAED800DCA6DC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D769ED11D2FAED800DCA6DC /* ViewController.swift in Sources */,
+				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
 				5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */,
+				5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +365,7 @@
 		};
 		5D769EDE1D2FAED800DCA6DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = QuickChat/Info.plist;
@@ -261,6 +377,7 @@
 		};
 		5D769EDF1D2FAED800DCA6DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = QuickChat/Info.plist;
@@ -289,6 +406,7 @@
 				5D769EDF1D2FAED800DCA6DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
