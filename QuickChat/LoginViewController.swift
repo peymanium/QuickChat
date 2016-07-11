@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     {
         if let email = self.TXT_Email.text where email != "", let password = self.TXT_Password.text where password != ""
         {
-            BackendlessFunctions.instance.LoginUser(email, password: password)
+            BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self)
             
             self.TXT_Password.text = ""
             self.TXT_Email.text = ""

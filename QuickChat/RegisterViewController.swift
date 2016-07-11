@@ -37,7 +37,7 @@ class RegisterViewController: UIViewController {
                 
                 print ("User created successfully \(registeredUser.email)")
                 
-                BackendlessFunctions.instance.LoginUser(email, password: password)
+                BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self)
                 
                 self.TXT_Username.text = ""
                 self.TXT_Password.text = ""
