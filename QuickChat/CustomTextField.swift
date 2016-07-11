@@ -1,5 +1,5 @@
 //
-//  CustomButton.swift
+//  CustomTextField.swift
 //  QuickChat
 //
 //  Created by Peyman Attarzadeh on 7/11/16.
@@ -8,15 +8,13 @@
 
 import UIKit
 
-class CustomButton: UIButton {
+class CustomTextField: UITextField {
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.layer.cornerRadius = 5
-        
-        self.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 40)
+        self.font = UIFont(name: "Helvetica Neue Thin ", size: 40)
     }
-    
 
 }

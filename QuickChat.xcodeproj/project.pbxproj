@@ -17,6 +17,8 @@
 		5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EED1D33F7C500DCA6DC /* CustomButton.swift */; };
 		5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */; };
 		5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */; };
+		5D769EF41D33FDCB00DCA6DC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EF31D33FDCB00DCA6DC /* CustomTextField.swift */; };
+		5D769EF71D33FEF200DCA6DC /* BackendlessFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */; };
 		CF275176905ACBEB8A04A7C7 /* Pods_QuickChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		5D769EED1D33F7C500DCA6DC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		5D769EF31D33FDCB00DCA6DC /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessFunctions.swift; sourceTree = "<group>"; };
 		8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.debug.xcconfig"; sourceTree = "<group>"; };
 		F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +84,7 @@
 		5D769ECD1D2FAED800DCA6DC /* QuickChat */ = {
 			isa = PBXGroup;
 			children = (
+				5D769EF51D33FEE000DCA6DC /* Utilities */,
 				5D769EE01D2FBBB800DCA6DC /* Constants */,
 				5D769EEB1D3122BC00DCA6DC /* Model */,
 				5D769EEA1D3122B700DCA6DC /* Views */,
@@ -131,8 +136,17 @@
 			isa = PBXGroup;
 			children = (
 				5D769EED1D33F7C500DCA6DC /* CustomButton.swift */,
+				5D769EF31D33FDCB00DCA6DC /* CustomTextField.swift */,
 			);
 			name = CustomClass;
+			sourceTree = "<group>";
+		};
+		5D769EF51D33FEE000DCA6DC /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		867A85827C7587B17A1670CD /* Frameworks */ = {
@@ -267,10 +281,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D769EF41D33FDCB00DCA6DC /* CustomTextField.swift in Sources */,
 				5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */,
 				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
 				5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */,
 				5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */,
+				5D769EF71D33FEF200DCA6DC /* BackendlessFunctions.swift in Sources */,
 				5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */,
 				5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */,
 			);
