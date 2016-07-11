@@ -14,6 +14,9 @@
 		5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EE11D2FBBC700DCA6DC /* Constants.swift */; };
 		5D769EE61D300E9100DCA6DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */; };
 		5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */; };
+		5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EED1D33F7C500DCA6DC /* CustomButton.swift */; };
+		5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */; };
+		5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */; };
 		CF275176905ACBEB8A04A7C7 /* Pods_QuickChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +30,9 @@
 		5D769EE11D2FBBC700DCA6DC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		5D769EED1D33F7C500DCA6DC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.debug.xcconfig"; sourceTree = "<group>"; };
 		F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,7 +103,10 @@
 		5D769EE91D3122B000DCA6DC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5D769EEC1D33F7A900DCA6DC /* CustomClass */,
 				5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */,
+				5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */,
+				5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -116,6 +125,14 @@
 			children = (
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		5D769EEC1D33F7A900DCA6DC /* CustomClass */ = {
+			isa = PBXGroup;
+			children = (
+				5D769EED1D33F7C500DCA6DC /* CustomButton.swift */,
+			);
+			name = CustomClass;
 			sourceTree = "<group>";
 		};
 		867A85827C7587B17A1670CD /* Frameworks */ = {
@@ -250,8 +267,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */,
 				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
 				5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */,
+				5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */,
+				5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */,
 				5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
