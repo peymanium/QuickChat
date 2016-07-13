@@ -35,23 +35,25 @@ class RegisterViewController: UIViewController {
             
             REF_INSTANCE.userService.registering(user, response: { (registeredUser: BackendlessUser!) in
                 
-                print ("User created successfully \(registeredUser.email)")
-                
-                BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self)
-                
-                self.TXT_Username.text = ""
-                self.TXT_Password.text = ""
-                self.TXT_Email.text = ""
+                BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self, completion: { 
+                    
+                    ProgressHUD.showSuccess("User created successfully")
+                    
+                    self.TXT_Username.text = ""
+                    self.TXT_Password.text = ""
+                    self.TXT_Email.text = ""
+                    
+                })
                 
             }) { (fault: Fault!) in
                 
-                print ("Error registering user \(fault)")
+                ProgressHUD.showError("Error registering user \(email))")
                 
             }
         }
         else
         {
-            print ("All feilds are mandatory")
+            ProgressHUD.showError("All fields required")
         }
     }
     

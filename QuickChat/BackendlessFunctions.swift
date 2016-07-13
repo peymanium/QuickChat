@@ -15,16 +15,18 @@ class BackendlessFunctions
 {
     static let instance = BackendlessFunctions()
 
-    func LoginUser(email: String, password: String, viewController : UIViewController!)
+    func LoginUser(email: String, password: String, viewController : UIViewController!, completion: ()->Void)
     {
+        ProgressHUD.show("Loading...")
+        
         REF_INSTANCE.userService.login(email, password: password, response: { (loggedInUser : BackendlessUser!) in
             
-            print ("User \(email) logged in successfully")
-            
+            completion() //To know if user logged in successully or not
             self.ShowChatViewController(viewController)
             
         }) { (fault : Fault!) in
-                print ("Error login user \(email) with error: \(fault)")
+            
+                ProgressHUD.showError("Error login user \(email)")
         }
     }
     func ShowChatViewController(viewController : UIViewController)
@@ -34,6 +36,8 @@ class BackendlessFunctions
             //Segue to ChatViewController UITabBarController
             let chatViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("ChatViewController") as! UITabBarController
             chatViewController.selectedIndex = 0
+            
+            ProgressHUD.dismiss()
             
             viewController.presentViewController(chatViewController, animated: true, completion: nil)
         }
