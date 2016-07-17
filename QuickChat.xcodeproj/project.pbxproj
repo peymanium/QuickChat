@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D4F5B401D398A0000DFB8E1 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B3F1D398A0000DFB8E1 /* ChatsViewController.swift */; };
 		5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */; };
 		5D4F5B461D3A7C3500DFB8E1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B451D3A7C3500DFB8E1 /* HelperFunctions.swift */; };
+		5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */; };
+		5D4F5B4B1D3AC24400DFB8E1 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */; };
 		5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */; };
 		5D769ED41D2FAED800DCA6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED21D2FAED800DCA6DC /* Main.storyboard */; };
 		5D769ED61D2FAED800DCA6DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED51D2FAED800DCA6DC /* Assets.xcassets */; };
@@ -28,9 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D4F5B3F1D398A0000DFB8E1 /* ChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		5D4F5B451D3A7C3500DFB8E1 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
+		5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
 		5D769ECB1D2FAED800DCA6DC /* QuickChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D769ED31D2FAED800DCA6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -72,6 +74,16 @@
 				F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5D4F5B471D3ABDB700DFB8E1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */,
+				5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */,
+				5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		5D769EC21D2FAED800DCA6DC = {
@@ -120,11 +132,9 @@
 		5D769EE91D3122B000DCA6DC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5D4F5B471D3ABDB700DFB8E1 /* Login */,
 				5D769EEC1D33F7A900DCA6DC /* CustomClass */,
-				5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */,
-				5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */,
-				5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */,
-				5D4F5B3F1D398A0000DFB8E1 /* ChatsViewController.swift */,
+				5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -141,6 +151,7 @@
 		5D769EEB1D3122BC00DCA6DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -317,8 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D769EFF1D368ED800DCA6DC /* ProgressHUD.m in Sources */,
+				5D4F5B4B1D3AC24400DFB8E1 /* Recent.swift in Sources */,
 				5D769EF41D33FDCB00DCA6DC /* CustomTextField.swift in Sources */,
-				5D4F5B401D398A0000DFB8E1 /* ChatsViewController.swift in Sources */,
 				5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */,
 				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
 				5D4F5B461D3A7C3500DFB8E1 /* HelperFunctions.swift in Sources */,
@@ -326,6 +337,7 @@
 				5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */,
 				5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */,
 				5D769EF71D33FEF200DCA6DC /* BackendlessFunctions.swift in Sources */,
+				5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */,
 				5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */,
 				5D769EE21D2FBBC700DCA6DC /* Constants.swift in Sources */,
 			);

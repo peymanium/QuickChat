@@ -28,63 +28,31 @@ class RecentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    
-    
-    func BindData(recent : Dictionary<String,AnyObject>)
+    func ConfigureCell(recent : Recent)
     {
         //User AVATAR
         self.IMG_Avatar.layer.cornerRadius = self.IMG_Avatar.frame.size.width/2
         self.IMG_Avatar.clipsToBounds = true
         self.IMG_Avatar.image = UIImage(named: "profile")
         
-        //Get ObjectID
-        let withUserObjectID = recent["withUserObjectID"] as! String
-    
-        //Get Backendless user details
-        
-        //Using WhereClause
-        let dataQuery = BackendlessDataQuery()
-        let whereClause = "objectID='\(withUserObjectID)'"
-        dataQuery.whereClause = whereClause
-        
-        let dataStore = REF_INSTANCE.data.of(BackendlessUser.ofClass())
-        dataStore.find(dataQuery, response: { (users : BackendlessCollection!) in
-            
-            let firstUser = users.data.first as! BackendlessUser
-            
-        }) { (fault : Fault!) in
-            
-            print ("Error fetching user details \(fault)")
-            
+        BackendlessFunctions.instance.GetBackendlessUser(recent.withUserObjectID) { (user: BackendlessUser) in
+            let withUser = user
         }
-        
-        /*
-        //Using FindBy ObjectID
-        dataStore.findID(withUserObjectID, response: { (user : AnyObject!) in
-            
-            let firstUser = user as! BackendlessUser
-            
-        }) { (fault : Fault!) in
-            
-            print ("Error fetching user details \(fault)")
-            
-        }
-         */
         
         
         //Name
-        self.LBL_Name.text = recent["withUserUsername"] as? String
-        self.LBL_LastMessage.text = recent["lastMessage"] as? String
+        self.LBL_Name.text = recent.withUserUsername
+        self.LBL_LastMessage.text = recent.lastMessage
         
         //New message
         self.LBL_Counter.text = ""
-        if ((recent["counter"] as? Int)! != 0)
+        if ((recent.counter) != 0)
         {
-            self.LBL_Counter.text = "\(recent["counter"]!) New"
+            self.LBL_Counter.text = "\(recent.counter) New"
         }
         
         //Date
-        let messageDate = DateFormatter().dateFromString((recent["date"] as? String)!)
+        let messageDate = DateFormatter().dateFromString((recent.messageDate))
         let seconds = NSDate().timeIntervalSinceDate(messageDate!)
         self.LBL_Date.text = self.TimeElapsed(seconds)
         

@@ -43,4 +43,40 @@ class BackendlessFunctions
         }
     }
     
+    
+    func GetBackendlessUser(userObjectID: String!, completion: (BackendlessUser) -> Void)
+    {
+        //Using WhereClause
+        let dataQuery = BackendlessDataQuery()
+        let whereClause = "objectID='\(userObjectID)'"
+        dataQuery.whereClause = whereClause
+        
+        let dataStore = REF_INSTANCE.data.of(BackendlessUser.ofClass())
+        dataStore.find(dataQuery, response: { (users : BackendlessCollection!) in
+            
+            let firstUser = users.data.first as! BackendlessUser
+            completion(firstUser)
+            
+        }) { (fault : Fault!) in
+            
+            print ("Error fetching user details \(fault)")
+            
+        }
+    }
+    func GetBackendlessUserWithObjectId(userObjectID: String!, completion: (BackendlessUser) -> Void)
+    {
+         let dataStore = REF_INSTANCE.data.of(BackendlessUser.ofClass())
+         dataStore.findID(userObjectID, response: { (user : AnyObject!) in
+         
+         let firstUser = user as! BackendlessUser
+            completion(firstUser)
+         
+         }) { (fault : Fault!) in
+         
+         print ("Error fetching user details \(fault)")
+         
+         }
+        
+    }
+    
 }
