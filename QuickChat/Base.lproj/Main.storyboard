@@ -288,10 +288,13 @@
                     <navigationItem key="navigationItem" title="Chats" id="HUc-ex-huo">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="iUi-q9-oWu">
                             <connections>
-                                <action selector="NewChat_Tapped:" destination="FXY-YG-aQx" id="mp6-8Z-pqt"/>
+                                <action selector="BTN_NewChat_Tapped:" destination="FXY-YG-aQx" id="9tO-Hf-7y9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="8q1-Sj-Hbq" kind="presentation" identifier="SEGUE_NEWCHAT" id="XX0-l6-Ma9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ua-dL-XLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

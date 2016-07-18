@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol NewChatDelegate
+{
+    func CreateChatroom(withUser : BackendlessUser)
+}
+
 class NewChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     @IBOutlet weak var tableView: UITableView!
     
     var users = [BackendlessUser]()
+    var delegate : NewChatDelegate!
     
     override func viewDidLoad()
     {
@@ -26,7 +32,7 @@ class NewChatViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func BTN_Cancel_Tapped(sender: AnyObject)
     {
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
@@ -45,6 +51,15 @@ class NewChatViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.textLabel?.text = user.name
         
         return cell
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let user = self.users[indexPath.row]
+        
+        delegate.CreateChatroom(user)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }

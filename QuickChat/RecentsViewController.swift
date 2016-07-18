@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewChatDelegate {
 
     var recents = [Recent]()
     
@@ -17,12 +17,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     
     }
-    
-    //MARK: New Chat Button
-    @IBAction func BTN_BewChat_Tapped(sender: AnyObject)
-    {
-    
-    }
+
     
     //MARK: UITableView Delegate Functions
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -46,4 +41,28 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
     }
+    
+    
+    
+    //MARK: New Chat Button
+    @IBAction func BTN_NewChat_Tapped(sender: AnyObject)
+    {
+        self.performSegueWithIdentifier("SEGUE_NEWCHAT", sender: self)
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "SEGUE_NEWCHAT"
+        {
+            let newChatViewController = segue.destinationViewController as! NewChatViewController
+            newChatViewController.delegate = self
+        }
+    }
+    
+    
+    //MARK: NewMessageDelegate
+    func CreateChatroom(withUser: BackendlessUser)
+    {
+        
+    }
+    
 }
