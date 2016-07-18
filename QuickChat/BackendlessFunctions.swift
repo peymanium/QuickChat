@@ -8,8 +8,8 @@
 
 import Foundation
 
-let REF_INSTANCE = Backendless.sharedInstance()
-let CURRENT_USER = REF_INSTANCE.userService.currentUser
+let BACKENDLESS_INSTANCE = Backendless.sharedInstance()
+let CURRENT_USER = BACKENDLESS_INSTANCE.userService.currentUser
 
 class BackendlessFunctions
 {
@@ -19,7 +19,7 @@ class BackendlessFunctions
     {
         ProgressHUD.show("Loading...")
         
-        REF_INSTANCE.userService.login(email, password: password, response: { (loggedInUser : BackendlessUser!) in
+        BACKENDLESS_INSTANCE.userService.login(email, password: password, response: { (loggedInUser : BackendlessUser!) in
             
             completion() //To know if user logged in successully or not
             self.ShowChatViewController(viewController)
@@ -48,10 +48,9 @@ class BackendlessFunctions
     {
         //Using WhereClause
         let dataQuery = BackendlessDataQuery()
-        let whereClause = "objectID='\(userObjectID)'"
-        dataQuery.whereClause = whereClause
+        dataQuery.whereClause = "objectID='\(userObjectID)'"
         
-        let dataStore = REF_INSTANCE.data.of(BackendlessUser.ofClass())
+        let dataStore = BACKENDLESS_INSTANCE.data.of(BackendlessUser.ofClass())
         dataStore.find(dataQuery, response: { (users : BackendlessCollection!) in
             
             let firstUser = users.data.first as! BackendlessUser
@@ -65,7 +64,7 @@ class BackendlessFunctions
     }
     func GetBackendlessUserWithObjectId(userObjectID: String!, completion: (BackendlessUser) -> Void)
     {
-         let dataStore = REF_INSTANCE.data.of(BackendlessUser.ofClass())
+         let dataStore = BACKENDLESS_INSTANCE.data.of(BackendlessUser.ofClass())
          dataStore.findID(userObjectID, response: { (user : AnyObject!) in
          
          let firstUser = user as! BackendlessUser
@@ -77,6 +76,24 @@ class BackendlessFunctions
          
          }
         
+    }
+    func GetAllBackendlessUsers(currentUserObjectID : String!) -> [BackendlessUser]
+    {
+        var users = [BackendlessUser]()
+        
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.whereClause = "objectId != '\(currentUserObjectID)'"
+        
+        let dataStore = BACKENDLESS_INSTANCE.persistenceService.of(BackendlessUser.ofClass())
+        dataStore.find(dataQuery, response: { (responseCollection: BackendlessCollection!) in
+            
+            users = responseCollection.data as! [BackendlessUser]
+            
+        }) { (fault: Fault!) in
+                print ("Error fetching users")
+        }
+        
+        return users
     }
     
 }

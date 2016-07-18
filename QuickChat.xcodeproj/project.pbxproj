@@ -11,6 +11,7 @@
 		5D4F5B461D3A7C3500DFB8E1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B451D3A7C3500DFB8E1 /* HelperFunctions.swift */; };
 		5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */; };
 		5D4F5B4B1D3AC24400DFB8E1 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */; };
+		5D4F5B4D1D3C203000DFB8E1 /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B4C1D3C203000DFB8E1 /* NewChatViewController.swift */; };
 		5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */; };
 		5D769ED41D2FAED800DCA6DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED21D2FAED800DCA6DC /* Main.storyboard */; };
 		5D769ED61D2FAED800DCA6DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D769ED51D2FAED800DCA6DC /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		5D4F5B451D3A7C3500DFB8E1 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
 		5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
+		5D4F5B4C1D3C203000DFB8E1 /* NewChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
 		5D769ECB1D2FAED800DCA6DC /* QuickChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D769ECE1D2FAED800DCA6DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D769ED31D2FAED800DCA6DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -41,12 +43,12 @@
 		5D769EDA1D2FAED800DCA6DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D769EE11D2FBBC700DCA6DC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5D769EE51D300E9100DCA6DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		5D769EE71D3122AB00DCA6DC /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WelcomeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D769EED1D33F7C500DCA6DC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		5D769EEF1D33F9C600DCA6DC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		5D769EF11D33F9D300DCA6DC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RegisterViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D769EF31D33FDCB00DCA6DC /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessFunctions.swift; sourceTree = "<group>"; };
+		5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BackendlessFunctions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D769EFB1D368ED800DCA6DC /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		5D769EFC1D368ED800DCA6DC /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		5D769EFD1D368ED800DCA6DC /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				5D4F5B471D3ABDB700DFB8E1 /* Login */,
 				5D769EEC1D33F7A900DCA6DC /* CustomClass */,
 				5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */,
+				5D4F5B4C1D3C203000DFB8E1 /* NewChatViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
 				5D4F5B461D3A7C3500DFB8E1 /* HelperFunctions.swift in Sources */,
 				5D769ECF1D2FAED800DCA6DC /* AppDelegate.swift in Sources */,
+				5D4F5B4D1D3C203000DFB8E1 /* NewChatViewController.swift in Sources */,
 				5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */,
 				5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */,
 				5D769EF71D33FEF200DCA6DC /* BackendlessFunctions.swift in Sources */,

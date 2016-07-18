@@ -10,7 +10,7 @@ import UIKit
 
 class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var recents: [Recent] = []
+    var recents = [Recent]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
