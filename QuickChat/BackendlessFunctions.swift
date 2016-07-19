@@ -77,7 +77,7 @@ class BackendlessFunctions
          }
         
     }
-    func GetAllBackendlessUsers(currentUserObjectID : String!) -> [BackendlessUser]
+    func GetAllBackendlessUsers(currentUserObjectID : String!, completion: ([BackendlessUser]) -> Void)
     {
         var users = [BackendlessUser]()
         
@@ -88,12 +88,11 @@ class BackendlessFunctions
         dataStore.find(dataQuery, response: { (responseCollection: BackendlessCollection!) in
             
             users = responseCollection.data as! [BackendlessUser]
+            completion(users)
             
         }) { (fault: Fault!) in
                 print ("Error fetching users")
         }
-        
-        return users
     }
     
 }

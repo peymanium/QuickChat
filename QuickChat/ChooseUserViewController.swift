@@ -8,26 +8,29 @@
 
 import UIKit
 
-protocol NewChatDelegate
+protocol ChooseUserDelegate
 {
     func CreateChatroom(withUser : BackendlessUser)
 }
 
-class NewChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     @IBOutlet weak var tableView: UITableView!
     
     var users = [BackendlessUser]()
-    var delegate : NewChatDelegate!
+    var delegate : ChooseUserDelegate!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
-        users = BackendlessFunctions.instance.GetAllBackendlessUsers(CURRENT_USER.objectId)
-        self.tableView.reloadData()
-        
+        BackendlessFunctions.instance.GetAllBackendlessUsers(CURRENT_USER.objectId, completion: { (result: [BackendlessUser]) in
+            
+            self.users = result
+            self.tableView.reloadData()
+            
+        })
     }
     
     @IBAction func BTN_Cancel_Tapped(sender: AnyObject)
