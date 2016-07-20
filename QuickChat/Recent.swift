@@ -15,6 +15,7 @@ class Recent
     private var _lastMessage: String?
     private var _counter: Int?
     private var _messageDate: String?
+    private var _chatroomId : String!
     
     var withUserObjectID: String
         {
@@ -35,6 +36,10 @@ class Recent
     var messageDate: String
         {
         return self._messageDate!
+    }
+    var ChatroomID : String
+    {
+        return self._chatroomId
     }
     
     

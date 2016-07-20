@@ -71,6 +71,9 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             let chatViewController = segue.destinationViewController as! ChatViewController
             
+            chatViewController.chatroomID = recent.ChatroomID
+            chatViewController.recent = recent
+            
         }
     }
     
@@ -83,6 +86,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.navigationController?.pushViewController(chatViewController, animated: true)
         
+        chatViewController.chatroomID = ""
+        chatViewController.withUser = withUser
     }
     
 }

@@ -25,7 +25,7 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
     {
         super.viewDidLoad()
 
-        BackendlessFunctions.instance.GetAllBackendlessUsers(CURRENT_USER.objectId, completion: { (result: [BackendlessUser]) in
+        BackendlessFunctions.instance.GetAllBackendlessUsers(BackendlessFunctions.instance.CURRENT_USER!.objectId, completion: { (result: [BackendlessUser]) in
             
             self.users = result
             self.tableView.reloadData()

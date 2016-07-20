@@ -33,7 +33,7 @@ class RegisterViewController: UIViewController {
             user.name = username
             user.setProperty("dateOfBirth", object: NSDate())
             
-            BACKENDLESS_INSTANCE.userService.registering(user, response: { (registeredUser: BackendlessUser!) in
+            BACKENDLESS_REF.userService.registering(user, response: { (registeredUser: BackendlessUser!) in
                 
                 BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self, completion: { 
                     

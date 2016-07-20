@@ -14,8 +14,8 @@ class WelcomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         //Automatically logs in if the user already logged in
-        BACKENDLESS_INSTANCE.userService.setStayLoggedIn(true)
-        if CURRENT_USER != nil
+        BACKENDLESS_REF.userService.setStayLoggedIn(true)
+        if let user = BackendlessFunctions.instance.CURRENT_USER
         {
             BackendlessFunctions.instance.ShowChatViewController(self)
         }
