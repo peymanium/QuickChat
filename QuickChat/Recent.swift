@@ -7,19 +7,29 @@
 //
 
 import Foundation
+import Firebase
 
 class Recent
 {
-    private var _withUserObjectID: String!
+    private var _recentID : String!
+    private var _userID: String!
+    private var _withUserID: String!
     private var _withUserUsername: String?
     private var _lastMessage: String?
     private var _counter: Int?
     private var _messageDate: String?
-    private var _chatroomId : String!
+    private var _chatroomID : String!
+    private var _members: [String]!
     
-    var withUserObjectID: String
+    private var _firebaseReference : FIRDatabaseReference!
+    
+    var userID: String
+    {
+        return self._userID
+    }
+    var withUserID: String
         {
-        return self._withUserObjectID
+        return self._withUserID
     }
     var withUserUsername: String
     {
@@ -37,19 +47,32 @@ class Recent
         {
         return self._messageDate!
     }
-    var ChatroomID : String
+    var chatroomID : String
     {
-        return self._chatroomId
+        return self._chatroomID
+    }
+    var members: [String]
+    {
+        return self._members
     }
     
     
-    init(withUserObjectID: String!, withUserUsername: String?, lastMessage: String?, counter: Int?, messageDate: String?)
+    init(recentID: String, values: Dictionary<String,AnyObject>!)
     {
-        self._withUserObjectID = withUserObjectID
-        self._withUserUsername = withUserUsername
-        self._lastMessage = lastMessage
-        self._counter = counter
-        self._messageDate = messageDate
+        self._recentID = recentID
+        self._counter = values["counter"] as? Int
+        self._chatroomID = values["chatroomID"] as! String
+        self._withUserUsername = values["withUserUsername"] as? String
+        self._messageDate = values["messageDate"] as? String
+        self._lastMessage = values["lastMessage"] as? String
+        self._members = values["members"] as? [String]
+        self._userID = values["userID"] as? String
+        self._withUserID = values["withUserID"] as? String
+        
+        
+        //We use this as a reference for further functions if we need to perform any action on that branch (childID) of the database
+        self._firebaseReference = FirebaseFunctions.instance.FIREBASE_RECENT.child(self._recentID)
+        
     }
     
     

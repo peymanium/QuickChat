@@ -7,13 +7,48 @@
 //
 
 import Foundation
+import Firebase
 
-
-private let dateFormat = "yyyyMMddHHmmss"
-func DateFormatter() -> NSDateFormatter
+class HelperFunctions
 {
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = dateFormat
+    static let instance = HelperFunctions()
     
-    return dateFormatter
+    
+    private let dateFormat = "yyyyMMddHHmmss"
+    func DateFormatter() -> NSDateFormatter
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        
+        return dateFormatter
+    }
+    
+    
+    //MARK: Create Chatroom
+    func StartChat(user: BackendlessUser, withUser:BackendlessUser) -> String
+    {
+        var chatroomID = ""
+        
+        let userID: String = user.objectId
+        let withUserID: String = withUser.objectId
+        
+        //We use Compare function in order to get the same ChartroomID even if the users switch in the function call parameters
+        let value = userID.compare(withUserID).rawValue
+        if value < 0
+        {
+            chatroomID = userID.stringByAppendingString(withUserID)
+        }
+        else
+        {
+            chatroomID = withUserID.stringByAppendingString(userID)
+        }
+        
+        let members = [userID, withUserID]
+        
+        //Create 2 chatrooms for 2 users
+        FirebaseFunctions.instance.InserToFirebase_Recent(userID, withUserID: withUserID, chatroomID: chatroomID, members: members, withUserUsername: withUser.name)
+        FirebaseFunctions.instance.InserToFirebase_Recent(withUserID, withUserID: userID, chatroomID: chatroomID, members: members, withUserUsername: user.name)
+        
+        return chatroomID
+    }
 }

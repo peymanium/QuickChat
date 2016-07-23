@@ -29,6 +29,8 @@ class BackendlessFunctions
         
         BACKENDLESS_REF.userService.login(email, password: password, response: { (loggedInUser : BackendlessUser!) in
             
+            self._currentUser = loggedInUser
+            
             completion() //To know if user logged in successully or not
             self.ShowChatViewController(viewController)
             
@@ -52,11 +54,11 @@ class BackendlessFunctions
     }
     
     
-    func GetBackendlessUser(userObjectID: String!, completion: (BackendlessUser) -> Void)
+    func GetBackendlessUser(userID: String!, completion: (BackendlessUser) -> Void)
     {
         //Using WhereClause
         let dataQuery = BackendlessDataQuery()
-        dataQuery.whereClause = "objectID='\(userObjectID)'"
+        dataQuery.whereClause = "objectID='\(userID)'"
         
         let dataStore = BACKENDLESS_REF.data.of(BackendlessUser.ofClass())
         dataStore.find(dataQuery, response: { (users : BackendlessCollection!) in
@@ -70,10 +72,10 @@ class BackendlessFunctions
             
         }
     }
-    func GetBackendlessUserWithObjectId(userObjectID: String!, completion: (BackendlessUser) -> Void)
+    func GetBackendlessUserWithID(userID: String!, completion: (BackendlessUser) -> Void)
     {
          let dataStore = BACKENDLESS_REF.data.of(BackendlessUser.ofClass())
-         dataStore.findID(userObjectID, response: { (user : AnyObject!) in
+         dataStore.findID(userID, response: { (user : AnyObject!) in
          
          let firstUser = user as! BackendlessUser
             completion(firstUser)
@@ -85,12 +87,13 @@ class BackendlessFunctions
          }
         
     }
-    func GetAllBackendlessUsers(currentUserObjectID : String!, completion: ([BackendlessUser]) -> Void)
+    //get list of all users except the current user (not to see his name in the list)
+    func GetAllBackendlessUsers(currentUserID : String!, completion: ([BackendlessUser]) -> Void)
     {
         var users = [BackendlessUser]()
         
         let dataQuery = BackendlessDataQuery()
-        dataQuery.whereClause = "objectId != '\(currentUserObjectID)'"
+        dataQuery.whereClause = "objectId != '\(currentUserID)'"
         
         let dataStore = BACKENDLESS_REF.persistenceService.of(BackendlessUser.ofClass())
         dataStore.find(dataQuery, response: { (responseCollection: BackendlessCollection!) in

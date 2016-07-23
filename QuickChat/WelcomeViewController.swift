@@ -17,6 +17,7 @@ class WelcomeViewController: UIViewController {
         BACKENDLESS_REF.userService.setStayLoggedIn(true)
         if let user = BackendlessFunctions.instance.CURRENT_USER
         {
+            print ("Welcome user: \(user.name)")
             BackendlessFunctions.instance.ShowChatViewController(self)
         }
     }
