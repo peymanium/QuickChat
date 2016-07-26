@@ -7,16 +7,45 @@
 //
 
 import UIKit
+import Firebase
 
 class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChooseUserDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
     var recents = [Recent]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        self.ReadDataFromFirebase_Recent()
     
     }
+    func ReadDataFromFirebase_Recent()
+    {
+        let userID = BackendlessFunctions.instance.CURRENT_USER?.objectId
+        
+        FirebaseFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
+            
+            //snapshotData.children.allObjects as? [FIRDataSnapshot]
+            //snapshotData.value?.allValues as? [Dictionary<String,AnyObject>]
+            self.recents.removeAll()
+            if let values = snapshotData.value?.allValues
+            {
+                let sortDescriptor = NSSortDescriptor(key: "messageDate", ascending: false)
+                let sorted = (values as NSArray).sortedArrayUsingDescriptors([sortDescriptor])
+                
+                for value in sorted
+                {
+                    let recent = Recent(values: value as! Dictionary<String, AnyObject>)
+                    self.recents.append(recent)
+                }
+            }
+            
+            self.tableView.reloadData()
+        }
+    }
+
 
     
     //MARK: UITableView Delegate Functions

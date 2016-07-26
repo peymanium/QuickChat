@@ -53,7 +53,7 @@ class FirebaseFunctions
                      "members": members,
                      "counter": 0,
                      "lastMessage": "",
-                     "date" : messageDate,
+                     "messageDate" : messageDate,
                      "order" : -1 * NSDate.timeIntervalSinceReferenceDate()
                 ]
                 
@@ -70,10 +70,7 @@ class FirebaseFunctions
             
         }
         
-        
-        
-        
-        
     }
+    
     
 }

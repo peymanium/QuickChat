@@ -57,9 +57,9 @@ class Recent
     }
     
     
-    init(recentID: String, values: Dictionary<String,AnyObject>!)
+    init(values: Dictionary<String,AnyObject>!)
     {
-        self._recentID = recentID
+        self._recentID = values["recentID"] as! String
         self._counter = values["counter"] as? Int
         self._chatroomID = values["chatroomID"] as! String
         self._withUserUsername = values["withUserUsername"] as? String
