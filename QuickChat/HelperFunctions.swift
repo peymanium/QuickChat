@@ -51,4 +51,23 @@ class HelperFunctions
         
         return chatroomID
     }
+    
+    
+    //MARK: Restart Recent Chat
+    //This function is being user when one user deletes a chat but the other user want to send him a message, so a new Recent data should be added in Firebase, as it should always have 2 recent records in firebase between CurrentUser ane WithUser.
+    func RestartRecentChar(recent: Recent)
+    {
+        for userID in recent.members
+        {
+            let currentUser = BackendlessFunctions.instance.CURRENT_USER!
+            
+            if userID != currentUser.objectId
+            {
+                FirebaseFunctions.instance.InserToFirebase_Recent(userID, withUserID: currentUser.objectId, chatroomID: recent.chatroomID, members: recent.members, withUserUsername: currentUser.name)
+            }
+        }
+        
+        
+    }
+    
 }

@@ -83,8 +83,11 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        //Restart Recent
+        let recent = self.recents[indexPath.row]
+        HelperFunctions.instance.RestartRecentChar(recent)
         
         self.performSegueWithIdentifier("SEGUE_CHAT", sender: indexPath)
     }
