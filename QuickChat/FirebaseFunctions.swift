@@ -71,6 +71,17 @@ class FirebaseFunctions
         }
         
     }
+    func DeleteFromFirebase_Recent(recent: Recent)
+    {
+        FIREBASE_RECENT.child(recent.recentID).removeValueWithCompletionBlock { (error: NSError?, reference: FIRDatabaseReference) in
+            
+            if error != nil
+            {
+                print ("error in deleting \(recent.recentID)")
+            }
+            
+        }
+    }
     
     
 }

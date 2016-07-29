@@ -14,7 +14,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     var recents = [Recent]()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         
@@ -27,7 +28,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         FirebaseFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
             
-            //snapshotData.children.allObjects as? [FIRDataSnapshot]
+            //either:
+            //snapshotData.children.allObjects as? [FIRDataSnapshot] //OR
             //snapshotData.value?.allValues as? [Dictionary<String,AnyObject>]
             self.recents.removeAll()
             if let values = snapshotData.value?.allValues
@@ -39,6 +41,13 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 {
                     let recent = Recent(values: value as! Dictionary<String, AnyObject>)
                     self.recents.append(recent)
+                    
+                    //Add function for offline mode
+                    /*
+                    FirebaseFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("chatroomID").queryEqualToValue(recent.chatroomID).observeEventType(.Value, withBlock: { (snapshotData: FIRDataSnapshot) in
+                     
+                    })
+                     */
                 }
             }
             
@@ -49,10 +58,12 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     
     //MARK: UITableView Delegate Functions
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         return self.recents.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -70,11 +81,31 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         self.performSegueWithIdentifier("SEGUE_CHAT", sender: indexPath)
     }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        return true
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    {
+        
+        let recent = self.recents[indexPath.row]
+        
+        self.recents.removeAtIndex(indexPath.row)
+        
+        //Remove from Firebase
+        FirebaseFunctions.instance.DeleteFromFirebase_Recent(recent)
+        
+        tableView.reloadData()
+        
+    }
+    
     
     
     
@@ -83,6 +114,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         self.performSegueWithIdentifier("SEGUE_CHOOSEUSER", sender: self)
     }
+    
+    
     
     //MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
@@ -99,12 +132,15 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let recent = self.recents[indexPath.row]
             
             let chatViewController = segue.destinationViewController as! ChatViewController
+            chatViewController.hidesBottomBarWhenPushed = true
             
             chatViewController.chatroomID = recent.chatroomID
             chatViewController.recent = recent
             
         }
     }
+    
+    
     
     
     //MARK: NewMessageDelegate
@@ -114,7 +150,6 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         chatViewController.hidesBottomBarWhenPushed = true
         
         self.navigationController?.pushViewController(chatViewController, animated: true)
-        
         
         chatViewController.chatroomID = HelperFunctions.instance.StartChat(BackendlessFunctions.instance.CURRENT_USER!, withUser: withUser)
         

@@ -23,6 +23,10 @@ class Recent
     
     private var _firebaseReference : FIRDatabaseReference!
     
+    var recentID: String
+        {
+        return self._recentID
+    }
     var userID: String
     {
         return self._userID
