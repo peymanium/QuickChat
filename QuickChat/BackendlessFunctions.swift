@@ -38,6 +38,7 @@ class BackendlessFunctions
             
                 ProgressHUD.showError("Error login user \(email)")
         }
+        
     }
     func ShowChatViewController(viewController : UIViewController)
     {

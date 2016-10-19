@@ -17,12 +17,14 @@ class RecentTableViewCell: UITableViewCell {
     @IBOutlet weak var LBL_Counter : UILabel!
     
     
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(selected: Bool, animated: Bool)
+    {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -42,6 +44,7 @@ class RecentTableViewCell: UITableViewCell {
         }
         
         
+        
         //Name
         self.LBL_Name.text = recent.withUserUsername
         self.LBL_LastMessage.text = recent.lastMessage
@@ -55,7 +58,7 @@ class RecentTableViewCell: UITableViewCell {
         
         //Date
         let messageDate = HelperFunctions.instance.DateFormatter().dateFromString((recent.messageDate))
-        let seconds = NSDate().timeIntervalSinceDate(messageDate!)
+        let seconds = NSDate().timeIntervalSinceDate(messageDate!) //check how many seconds has been passed from today and the date of the recent message date
         self.LBL_Date.text = self.TimeElapsed(seconds)
         
     }

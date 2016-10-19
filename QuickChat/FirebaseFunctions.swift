@@ -29,7 +29,7 @@ class FirebaseFunctions
     
     
     //MARK: Functions
-    func InserToFirebase_Recent(userID: String, withUserID: String, chatroomID: String, members: [String], withUserUsername: String)
+    func InsertToFirebase_Recent(userID: String, withUserID: String, chatroomID: String, members: [String], withUserUsername: String)
     {
         
         //Check if chatroomID already exists or not

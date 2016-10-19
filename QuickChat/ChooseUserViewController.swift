@@ -19,7 +19,7 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tableView: UITableView!
     
     var users = [BackendlessUser]()
-    var delegate : ChooseUserDelegate!
+    var delegate : ChooseUserDelegate! //delegate for our protocol
     
     override func viewDidLoad()
     {

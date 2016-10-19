@@ -25,7 +25,7 @@ class HelperFunctions
     
     
     //MARK: Create Chatroom
-    func StartChat(user: BackendlessUser, withUser:BackendlessUser) -> String
+    func CreateChatroomID(user: BackendlessUser, withUser:BackendlessUser) -> String
     {
         var chatroomID = ""
         
@@ -46,16 +46,16 @@ class HelperFunctions
         let members = [userID, withUserID]
         
         //Create 2 chatrooms for 2 users
-        FirebaseFunctions.instance.InserToFirebase_Recent(userID, withUserID: withUserID, chatroomID: chatroomID, members: members, withUserUsername: withUser.name)
-        FirebaseFunctions.instance.InserToFirebase_Recent(withUserID, withUserID: userID, chatroomID: chatroomID, members: members, withUserUsername: user.name)
+        FirebaseFunctions.instance.InsertToFirebase_Recent(userID, withUserID: withUserID, chatroomID: chatroomID, members: members, withUserUsername: withUser.name)
+        FirebaseFunctions.instance.InsertToFirebase_Recent(withUserID, withUserID: userID, chatroomID: chatroomID, members: members, withUserUsername: user.name)
         
         return chatroomID
     }
     
     
     //MARK: Restart Recent Chat
-    //This function is being user when one user deletes a chat but the other user want to send him a message, so a new Recent data should be added in Firebase, as it should always have 2 recent records in firebase between CurrentUser ane WithUser.
-    func RestartRecentChar(recent: Recent)
+    //This function is being used when one user deletes a chat but the other user want to send him a message, so a new Recent data should be added in Firebase, as it should always have 2 recent records in firebase between CurrentUser ane WithUser.
+    func RestartRecentChat(recent: Recent)
     {
         for userID in recent.members
         {
@@ -63,7 +63,7 @@ class HelperFunctions
             
             if userID != currentUser.objectId
             {
-                FirebaseFunctions.instance.InserToFirebase_Recent(userID, withUserID: currentUser.objectId, chatroomID: recent.chatroomID, members: recent.members, withUserUsername: currentUser.name)
+                FirebaseFunctions.instance.InsertToFirebase_Recent(userID, withUserID: currentUser.objectId, chatroomID: recent.chatroomID, members: recent.members, withUserUsername: currentUser.name)
             }
         }
         

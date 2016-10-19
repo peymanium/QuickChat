@@ -35,9 +35,9 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let values = snapshotData.value?.allValues
             {
                 let sortDescriptor = NSSortDescriptor(key: "messageDate", ascending: false)
-                let sorted = (values as NSArray).sortedArrayUsingDescriptors([sortDescriptor])
+                let sortedArray = (values as NSArray).sortedArrayUsingDescriptors([sortDescriptor])
                 
-                for value in sorted
+                for value in sortedArray
                 {
                     let recent = Recent(values: value as! Dictionary<String, AnyObject>)
                     self.recents.append(recent)
@@ -87,7 +87,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         //Restart Recent
         let recent = self.recents[indexPath.row]
-        HelperFunctions.instance.RestartRecentChar(recent)
+        HelperFunctions.instance.RestartRecentChat(recent)
         
         self.performSegueWithIdentifier("SEGUE_CHAT", sender: indexPath)
     }
@@ -154,7 +154,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.navigationController?.pushViewController(chatViewController, animated: true)
         
-        chatViewController.chatroomID = HelperFunctions.instance.StartChat(BackendlessFunctions.instance.CURRENT_USER!, withUser: withUser)
+        chatViewController.chatroomID = HelperFunctions.instance.CreateChatroomID(BackendlessFunctions.instance.CURRENT_USER!, withUser: withUser)
         
         chatViewController.withUser = withUser
     }
