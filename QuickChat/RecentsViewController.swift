@@ -18,15 +18,13 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         super.viewDidLoad()
 
-        
         self.ReadDataFromFirebase_Recent()
     
     }
     func ReadDataFromFirebase_Recent()
     {
         let userID = BackendlessFunctions.instance.CURRENT_USER?.objectId
-        
-        FirebaseFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
+        RecentsFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
             
             //either:
             //snapshotData.children.allObjects as? [FIRDataSnapshot] //OR
@@ -87,7 +85,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         //Restart Recent
         let recent = self.recents[indexPath.row]
-        HelperFunctions.instance.RestartRecentChat(recent)
+        //make sure that both users (sender and receiver) have a recent message created in firebase, and when CurrentUser (userSender) taps on the recent so he has already the recent, we must make sure second user (receiver) has recent
+        RecentsFunctions.instance.RestartRecentChat(recent)
         
         self.performSegueWithIdentifier("SEGUE_CHAT", sender: indexPath)
     }
@@ -103,7 +102,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.recents.removeAtIndex(indexPath.row)
         
         //Remove from Firebase
-        FirebaseFunctions.instance.DeleteFromFirebase_Recent(recent)
+        RecentsFunctions.instance.DeleteFromFirebase_Recent(recent)
         
         tableView.reloadData()
         
@@ -120,7 +119,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     
-    //MARK: Segue
+    //MARK: Segues
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
         if segue.identifier == "SEGUE_CHOOSEUSER"
@@ -147,16 +146,16 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     //MARK: NewMessageDelegate
-    func CreateChatroom(withUser: BackendlessUser)
+    func CreateChatroom(userReceiver: BackendlessUser)
     {
         let chatViewController = ChatViewController()
         chatViewController.hidesBottomBarWhenPushed = true
         
         self.navigationController?.pushViewController(chatViewController, animated: true)
         
-        chatViewController.chatroomID = HelperFunctions.instance.CreateChatroomID(BackendlessFunctions.instance.CURRENT_USER!, withUser: withUser)
+        chatViewController.chatroomID = RecentsFunctions.instance.CreateRecentAndGenerateChatroomID(BackendlessFunctions.instance.CURRENT_USER!, userReceiver: userReceiver)
         
-        chatViewController.withUser = withUser
+        chatViewController.userReceiver = userReceiver
     }
     
 }

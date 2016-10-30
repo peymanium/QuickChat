@@ -10,7 +10,7 @@ import UIKit
 
 protocol ChooseUserDelegate
 {
-    func CreateChatroom(withUser : BackendlessUser)
+    func CreateChatroom(userReceiver : BackendlessUser)
 }
 
 class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -40,10 +40,12 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     //MARK: UITableViewDelegateFunctions
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         return users.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell

@@ -37,16 +37,16 @@ class RecentTableViewCell: UITableViewCell {
         self.IMG_Avatar.clipsToBounds = true
         self.IMG_Avatar.image = UIImage(named: "profile")
         
-        BackendlessFunctions.instance.GetBackendlessUser(recent.withUserID) { (user: BackendlessUser) in
-            let withUser = user
+        BackendlessFunctions.instance.GetBackendlessUser(recent.userReceiverID) { (user: BackendlessUser) in
+            let userReceiver = user
             
-            print ("withUser: \(withUser)")
+            print ("userReceiver: \(userReceiver)")
         }
         
         
         
         //Name
-        self.LBL_Name.text = recent.withUserUsername
+        self.LBL_Name.text = recent.userReceiverUsername
         self.LBL_LastMessage.text = recent.lastMessage
         
         //New message
