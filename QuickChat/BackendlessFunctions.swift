@@ -12,18 +12,18 @@ let BACKENDLESS_REF = Backendless.sharedInstance()
 
 class BackendlessFunctions
 {
-    static let instance = BackendlessFunctions()
+    //static let instance = BackendlessFunctions()
 
     //MARK: Variables
-    private var _currentUser = BACKENDLESS_REF.userService.currentUser
-    var CURRENT_USER : BackendlessUser?
+    static private var _currentUser = BACKENDLESS_REF.userService.currentUser
+    static var CURRENT_USER : BackendlessUser!
     {
         return self._currentUser
     }
     
     
     //MARK: Functions
-    func LoginUser(email: String, password: String, viewController : UIViewController!, completion: ()->Void)
+    class func LoginUser(email: String, password: String, viewController : UIViewController!, completion: ()->Void)
     {
         ProgressHUD.show("Loading...")
         
@@ -40,7 +40,7 @@ class BackendlessFunctions
         }
         
     }
-    func ShowChatViewController(viewController : UIViewController)
+    class func ShowChatViewController(viewController : UIViewController)
     {
         dispatch_async(dispatch_get_main_queue())
         {
@@ -55,7 +55,7 @@ class BackendlessFunctions
     }
     
     
-    func GetBackendlessUser(userID: String!, completion: (BackendlessUser) -> Void)
+    class func GetBackendlessUser(userID: String!, completion: (BackendlessUser) -> Void)
     {
         //Using WhereClause
         let dataQuery = BackendlessDataQuery()
@@ -73,7 +73,7 @@ class BackendlessFunctions
             
         }
     }
-    func GetBackendlessUserWithID(userID: String!, completion: (BackendlessUser) -> Void)
+    class func GetBackendlessUserWithID(userID: String!, completion: (BackendlessUser) -> Void)
     {
          let dataStore = BACKENDLESS_REF.data.of(BackendlessUser.ofClass())
          dataStore.findID(userID, response: { (user : AnyObject!) in
@@ -89,7 +89,7 @@ class BackendlessFunctions
         
     }
     //get list of all users except the current user (not to see his name in the list)
-    func GetAllBackendlessUsers(currentUserID : String!, completion: ([BackendlessUser]) -> Void)
+    class func GetAllBackendlessUsers(currentUserID : String!, completion: ([BackendlessUser]) -> Void)
     {
         var users = [BackendlessUser]()
         

@@ -15,10 +15,10 @@ class WelcomeViewController: UIViewController {
         
         //Automatically logs in if the user already logged in
         BACKENDLESS_REF.userService.setStayLoggedIn(true)
-        if let user = BackendlessFunctions.instance.CURRENT_USER
+        if let user = BackendlessFunctions.CURRENT_USER
         {
             print ("Welcome user: \(user.name)")
-            BackendlessFunctions.instance.ShowChatViewController(self)
+            BackendlessFunctions.ShowChatViewController(self)
         }
     }
     

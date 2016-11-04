@@ -37,7 +37,7 @@ class RecentTableViewCell: UITableViewCell {
         self.IMG_Avatar.clipsToBounds = true
         self.IMG_Avatar.image = UIImage(named: "profile")
         
-        BackendlessFunctions.instance.GetBackendlessUser(recent.userReceiverID) { (user: BackendlessUser) in
+        BackendlessFunctions.GetBackendlessUser(recent.userReceiverID) { (user: BackendlessUser) in
             let userReceiver = user
             
             print ("userReceiver: \(userReceiver)")
@@ -57,7 +57,7 @@ class RecentTableViewCell: UITableViewCell {
         }
         
         //Date
-        let messageDate = HelperFunctions.instance.DateFormatter().dateFromString((recent.messageDate))
+        let messageDate = HelperFunctions.DateFormatter().dateFromString((recent.messageDate))
         let seconds = NSDate().timeIntervalSinceDate(messageDate!) //check how many seconds has been passed from today and the date of the recent message date
         self.LBL_Date.text = self.TimeElapsed(seconds)
         

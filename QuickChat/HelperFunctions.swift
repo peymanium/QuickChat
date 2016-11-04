@@ -8,17 +8,63 @@
 
 import Foundation
 
+enum MESSAGE_TYPE: String
+{
+    case Text
+    case Image
+    case Location
+}
+enum DELIVERY_STATUS: String
+{
+    case Delivered
+}
+
 class HelperFunctions
 {
-    static let instance = HelperFunctions()
+    //static let instance = HelperFunctions()
     
+    static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    private let dateFormat = "yyyyMMddHHmmss"
-    func DateFormatter() -> NSDateFormatter
+    static private let dateFormat = "yyyyMMddHHmmss"
+    class func DateFormatter() -> NSDateFormatter
     {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
         
         return dateFormatter
     }
+    
+    
+    class func IsUserHaveAccessToLocation() -> Bool
+    {
+        if self.appDelegate.coordinate != nil
+        {
+            return true
+        }
+        
+        return false
+    }
+    
+    
+    //MARK: Image functions
+    class func ConvertImageDataToString()
+    {
+        
+    }
+    class func ConvertStringToImage(imageDataString: String?, completion: (image: UIImage?) -> Void)
+    {
+        var image: UIImage?
+        
+        let decodedData = NSData(base64EncodedString: imageDataString!, options: NSDataBase64DecodingOptions(rawValue: 0))
+        image = UIImage(data: decodedData!)
+        
+        completion(image: image)
+    }
+    class func ConvertImageDataToString(imageData: NSData) -> String
+    {
+        let imageDataString = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        
+        return imageDataString
+    }
+    
 }

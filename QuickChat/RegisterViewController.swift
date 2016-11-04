@@ -35,7 +35,7 @@ class RegisterViewController: UIViewController {
             
             BACKENDLESS_REF.userService.registering(user, response: { (registeredUser: BackendlessUser!) in
                 
-                BackendlessFunctions.instance.LoginUser(email, password: password, viewController: self, completion: { 
+                BackendlessFunctions.LoginUser(email, password: password, viewController: self, completion: { 
                     
                     ProgressHUD.showSuccess("User created successfully")
                     

@@ -23,8 +23,8 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func ReadDataFromFirebase_Recent()
     {
-        let userID = BackendlessFunctions.instance.CURRENT_USER?.objectId
-        RecentsFunctions.instance.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
+        let userID = BackendlessFunctions.CURRENT_USER.objectId
+        RecentsFunctions.FIREBASE_RECENT.queryOrderedByChild("userID").queryEqualToValue(userID).observeEventType(.Value) { (snapshotData: FIRDataSnapshot) in
             
             //either:
             //snapshotData.children.allObjects as? [FIRDataSnapshot] //OR
@@ -86,7 +86,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //Restart Recent
         let recent = self.recents[indexPath.row]
         //make sure that both users (sender and receiver) have a recent message created in firebase, and when CurrentUser (userSender) taps on the recent so he has already the recent, we must make sure second user (receiver) has recent
-        RecentsFunctions.instance.RestartRecentChat(recent)
+        RecentsFunctions.RestartRecentChat(recent)
         
         self.performSegueWithIdentifier("SEGUE_CHAT", sender: indexPath)
     }
@@ -101,8 +101,10 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.recents.removeAtIndex(indexPath.row)
         
+        
         //Remove from Firebase
-        RecentsFunctions.instance.DeleteFromFirebase_Recent(recent)
+        recent.DeleteRecentChat()
+        
         
         tableView.reloadData()
         
@@ -153,7 +155,7 @@ class RecentsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.navigationController?.pushViewController(chatViewController, animated: true)
         
-        chatViewController.chatroomID = RecentsFunctions.instance.CreateRecentAndGenerateChatroomID(BackendlessFunctions.instance.CURRENT_USER!, userReceiver: userReceiver)
+        chatViewController.chatroomID = RecentsFunctions.CreateRecentChat(BackendlessFunctions.CURRENT_USER, userReceiver: userReceiver)
         
         chatViewController.userReceiver = userReceiver
     }

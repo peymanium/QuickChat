@@ -11,11 +11,12 @@ import Firebase
 
 class MessagesFunctions
 {
-    static let instance = MessagesFunctions()
+    //static let instance = MessagesFunctions()
+    
     
     //MARK: Variables
-    private var _firebase_messages = FIRDatabase.database().reference().child("Messages")
-    var FIREBASE_MESSAGES : FIRDatabaseReference
+    static private var _firebase_messages = FIRDatabase.database().reference().child("Messages")
+    static var FIREBASE_MESSAGES : FIRDatabaseReference
     {
         return self._firebase_messages
     }
@@ -23,13 +24,16 @@ class MessagesFunctions
     
     
     //Mark: Firebase Functions
-    func InsertToFirebase_SendMessage(chatroomID: String, message: Message)
+    class func InsertToFirebase_Message(chatroomID: String, message: Message)
     {
         let messageRef = self._firebase_messages.child(chatroomID).childByAutoId()
         
-        message.messageID = messageRef.key
         
-        let values : Dictionary<String, AnyObject> = [
+        message.messageID = messageRef.key //create messageID
+        
+        
+        //Create dictionary for adding all fields
+        var values : Dictionary<String, AnyObject> = [
             "messageID":message.messageID,
             "messageText":message.messageText,
             "senderID":message.senderID,
@@ -39,6 +43,21 @@ class MessagesFunctions
             "status":message.status,
             ]
         
+        
+        //Add extra fields for different type of messages
+        if message.messageType == MESSAGE_TYPE.Location.rawValue
+        {
+            values["longtitude"] = message.longtitude
+            values["latitude"] = message.latitude
+        }
+        else if message.messageType == MESSAGE_TYPE.Image.rawValue
+        {
+            values["imageDataString"] = message.imageDataString
+        }
+        
+        
+        
+        //Add to firebase
         messageRef.setValue(values) { (error: NSError?, reference: FIRDatabaseReference) in
             if error != nil
             {
@@ -46,11 +65,12 @@ class MessagesFunctions
             }
         }
         
+        
         //Send Push Notification
         
         
         //Update Recents tableView
-        RecentsFunctions.instance.UpdateRecents(chatroomID, message: message)
+        RecentsFunctions.UpdateRecents(chatroomID, message: message)
     }
     
 }

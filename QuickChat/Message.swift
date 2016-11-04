@@ -18,9 +18,9 @@ class Message
     private var _messageDate: String!
     private var _status: String!
     private var _messageType: String!
-    private var _longtitude: String?
-    private var _latitude: String?
-    private var _imageData: String?
+    private var _longtitude: NSNumber?
+    private var _latitude: NSNumber?
+    private var _imageDataString: String?
     
     var messageID: String
     {
@@ -63,25 +63,30 @@ class Message
         return self._messageType
     }
     
-    var longtitude: String
+    var longtitude: NSNumber
     {
         return self._longtitude!
     }
     
-    var latitude: String
+    var latitude: NSNumber
     {
         return self._latitude!
     }
     
-    var imageData: String
+    var imageDataString: String
     {
-        return self._imageData!
+        return self._imageDataString!
     }
     
-    //MARK: init funcation
-    init(values: NSDictionary)
+    //MARK: init funcations
+    init()
     {
-        self._messageID = ""
+        
+    }
+    
+    init(values: NSDictionary) //From Firebase
+    {
+        self._messageID = values["messageID"] as! String
         self._messageText = values["messageText"] as! String
         self._senderID = values["senderID"] as! String
         self._senderName = values["senderName"] as! String
@@ -90,38 +95,34 @@ class Message
         self._status = values["status"] as! String
         
         //Optional
-        if (values["imageData"] as? NSData) != nil
+        if self._messageType == MESSAGE_TYPE.Image.rawValue
         {
-            let imageData = values["imageData"] as? NSData
-            
-            self._imageData = imageData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+            self._imageDataString = values["imageDataString"] as? String
         }
-        if values["longtitude"] !=  nil && values["latitue"] != nil
+        if self._messageType == MESSAGE_TYPE.Location.rawValue
         {
-            self._longtitude = values["longtitude"] as? String
-            self._latitude = values["latitude"] as? String
+            self._longtitude = values["longtitude"] as? NSNumber
+            self._latitude = values["latitude"] as? NSNumber
         }
         
     }
     
     
-    init()
-    {
-        
-    }
     init(messageText: String, senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String)
     {
         self.initializeProperties(messageText, senderID: senderID, senderName: senderName, messageDate: messageDate, messageType: messageType, status: status)
+        
+        self._messageText = messageText
     }
     
-    init(messageText: String, senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String, imageData: NSData)
+    init(messageText: String, imageDataString: String, senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String)
     {
         self.initializeProperties(messageText, senderID: senderID, senderName: senderName, messageDate: messageDate, messageType: messageType, status: status)
         
-        self._imageData = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        self._imageDataString = imageDataString
     }
     
-    init(messageText: String, senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String, longtitude: String, latitude: String)
+    init(messageText: String, longtitude: NSNumber, latitude: NSNumber,  senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String)
     {        
         self.initializeProperties(messageText, senderID: senderID, senderName: senderName, messageDate: messageDate, messageType: messageType, status: status)
         
@@ -129,13 +130,16 @@ class Message
         self._latitude = latitude
     }
     
+    
+    
+    
     //MARK: method for initializing all properties
     private func initializeProperties(messageText: String, senderID: String, senderName: String, messageDate: NSDate, messageType: String, status: String)
     {
         self._messageText = messageText
         self._senderID = senderID
         self._senderName = senderName
-        self._messageDate = HelperFunctions.instance.DateFormatter().stringFromDate(messageDate)
+        self._messageDate = HelperFunctions.DateFormatter().stringFromDate(messageDate)
         self._messageType = messageType
         self._status = status
 

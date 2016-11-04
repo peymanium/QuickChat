@@ -11,7 +11,7 @@ import Firebase
 
 class Recent
 {
-    private var _firebaseReference : FIRDatabaseReference!
+    private var _firebaseRef : FIRDatabaseReference!
     
     private var _recentID : String!
     private var _userID: String!
@@ -73,10 +73,47 @@ class Recent
         self._userID = values["userID"] as? String
         self._userReceiverID = values["userReceiverID"] as? String
         
+
+        //We use this as a reference for further functions if we need to perform any action on that branch (childID) of the database (Delete Recent, Update Recent)
+        self._firebaseRef = RecentsFunctions.FIREBASE_RECENT.child(self._recentID)
         
-        //We use this as a reference for further functions if we need to perform any action on that branch (childID) of the database
-        self._firebaseReference = RecentsFunctions.instance.FIREBASE_RECENT.child(self._recentID)
+    }
+    
+    func DeleteRecentChat()
+    {
+        self._firebaseRef.removeValueWithCompletionBlock { (error: NSError?, reference: FIRDatabaseReference) in
+            
+            if error != nil
+            {
+                print ("error in deleting \(self._recentID)")
+            }
+            
+        }
+    }
+    func UpdateRecent(lastMessageText: String, messageDate: String)
+    {
+        var counter = self._counter!
         
+        //User should not be Curent User in order to see counter=1 for new message
+        if self._userID != BackendlessFunctions.CURRENT_USER.objectId
+        {
+            counter = counter + 1
+        }
+        
+        
+        //Create Dictionary for updated values
+        let values: Dictionary<String, AnyObject> = ["lastMessage": lastMessageText, "messageDate": messageDate, "counter": counter]
+        
+        
+        //Update Firebase for that RecentID
+        self._firebaseRef.updateChildValues(values as [NSObject : AnyObject], withCompletionBlock: { (error: NSError?, reference: FIRDatabaseReference) in
+            
+            if error != nil
+            {
+                print ("error in updating \(self._recentID)")
+            }
+            
+        })
     }
     
 }

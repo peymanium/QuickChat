@@ -11,17 +11,17 @@ import Firebase
 
 class RecentsFunctions
 {
-    static let instance = RecentsFunctions()
+    //static let instance = RecentsFunctions()
     
-    private var _firebase_recent = FIRDatabase.database().reference().child("Recents")
-    var FIREBASE_RECENT : FIRDatabaseReference
+    static private var _firebase_recent = FIRDatabase.database().reference().child("Recents")
+    static var FIREBASE_RECENT : FIRDatabaseReference
     {
         return self._firebase_recent
     }
     
 
     //MARK: Firebase Function
-    func InsertToFirebase_Recent(userID: String, userReceiverID: String, chatroomID: String, members: [String], userReceiverUsername: String)
+    class func InsertToFirebase_Recent(userID: String, userReceiverID: String, chatroomID: String, members: [String], userReceiverUsername: String)
     {
         //Check if chatroomID already exists or not
         self._firebase_recent.queryOrderedByChild("chatroomID").queryEqualToValue(chatroomID).observeSingleEventOfType(.Value) { (snapshotData: FIRDataSnapshot!) in
@@ -29,11 +29,11 @@ class RecentsFunctions
             var createNewChat = true
             
             //if let values = snapshot.value?.allValues
-            if let snapshots = snapshotData.children.allObjects as? [FIRDataSnapshot]
+            if let snapshots = snapshotData.value?.allValues
             {
                 for snapshot in snapshots
                 {
-                    let recent = Recent(values: snapshot.value as! Dictionary<String, AnyObject>)
+                    let recent = Recent(values: snapshot as! Dictionary<String, AnyObject>)
                     
                     if (recent.userID == userID) //There is no recent created for userID
                     {
@@ -49,7 +49,7 @@ class RecentsFunctions
                 let recentReference = self._firebase_recent.childByAutoId()
                 
                 let recentID = recentReference.key
-                let messageDate = HelperFunctions.instance.DateFormatter().stringFromDate(NSDate())
+                let messageDate = HelperFunctions.DateFormatter().stringFromDate(NSDate())
                 
                 let values : Dictionary<String,AnyObject> =
                     ["recentID": recentID ,
@@ -78,19 +78,11 @@ class RecentsFunctions
         }
         
     }
-    func DeleteFromFirebase_Recent(recent: Recent)
+    class func UpdateRecents(chatroomID: String, message: Message)
     {
-        FIREBASE_RECENT.child(recent.recentID).removeValueWithCompletionBlock { (error: NSError?, reference: FIRDatabaseReference) in
-            
-            if error != nil
-            {
-                print ("error in deleting \(recent.recentID)")
-            }
-            
-        }
-    }
-    func UpdateRecents(chatroomID: String, message: Message)
-    {
+        let messageDate = message.messageDate
+        let lastMessage = message.messageText
+        
         self._firebase_recent.queryOrderedByChild("chatroomID").queryEqualToValue(chatroomID).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
             
             if snapshot.exists()
@@ -100,28 +92,7 @@ class RecentsFunctions
                     for value in values
                     {
                         let recent = Recent(values: value as! Dictionary<String, AnyObject>)
-                        
-                        let messageDate = message.messageDate
-                        let lastMessage = message.messageText
-                        var counter = recent.counter
-                        //User should not be Curent User in order to see counter=1 for new message
-                        if recent.userID != BackendlessFunctions.instance.CURRENT_USER?.objectId
-                        {
-                            counter = counter + 1
-                        }
-                        
-                        //Create Dictionary for updated values
-                        let values = ["lastMessage": lastMessage, "messageDate": messageDate, "counter": counter]
-                        
-                        //Update Firebase for that RecentID
-                        self._firebase_recent.child(recent.recentID).updateChildValues(values as [NSObject : AnyObject], withCompletionBlock: { (error: NSError?, reference: FIRDatabaseReference) in
-                            
-                            if error != nil
-                            {
-                                print ("error in updating \(recent.recentID)")
-                            }
-                            
-                        })
+                        recent.UpdateRecent(lastMessage, messageDate: messageDate)
                     }
                 }
             }
@@ -131,7 +102,7 @@ class RecentsFunctions
     
     
     //MARK: Create Chatroom
-    func CreateRecentAndGenerateChatroomID(userSender: BackendlessUser, userReceiver:BackendlessUser) -> String
+    class func CreateRecentChat(userSender: BackendlessUser!, userReceiver:BackendlessUser!) -> String
     {
         var chatroomID = ""
         
@@ -149,11 +120,17 @@ class RecentsFunctions
             chatroomID = userReceiverID.stringByAppendingString(userID)
         }
         
+        
+        
         let members = [userID, userReceiverID]
+        
+        
         
         //Create 2 chatrooms for 2 users
         self.InsertToFirebase_Recent(userID, userReceiverID: userReceiverID, chatroomID: chatroomID, members: members, userReceiverUsername: userReceiver.name)
+        
         self.InsertToFirebase_Recent(userReceiverID, userReceiverID: userID, chatroomID: chatroomID, members: members, userReceiverUsername: userSender.name)
+        
         
         return chatroomID
     }
@@ -161,16 +138,16 @@ class RecentsFunctions
     
     //MARK: Restart Recent Chat
     //This function is being used when one user deletes a chat but the other user want to send him a message, so a new Recent data should be added in Firebase, as it should always have 2 recent records in firebase between CurrentUser ane userReceiver.
-    func RestartRecentChat(recent: Recent)
+    class func RestartRecentChat(recent: Recent)
     {
         for userID in recent.members
         {
-            let currentUser = BackendlessFunctions.instance.CURRENT_USER!
+            let currentUser = BackendlessFunctions.CURRENT_USER
             
-            //if userID != currentUser.objectId
-            //{
+            if userID != currentUser.objectId
+            {
                 self.InsertToFirebase_Recent(userID, userReceiverID: currentUser.objectId, chatroomID: recent.chatroomID, members: recent.members, userReceiverUsername: currentUser.name)
-            //}
+            }
         }
         
         

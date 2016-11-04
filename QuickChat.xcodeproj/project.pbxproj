@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0422561DCA1C74003BD21B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0422551DCA1C74003BD21B /* Camera.swift */; };
+		5D0422581DCD2DC6003BD21B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0422571DCD2DC6003BD21B /* MapViewController.swift */; };
 		5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */; };
 		5D4F5B461D3A7C3500DFB8E1 /* RecentsFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B451D3A7C3500DFB8E1 /* RecentsFunctions.swift */; };
 		5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */; };
@@ -30,11 +32,12 @@
 		5D7BAB8F1D434F190086760B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D7BAB8E1D434F190086760B /* GoogleService-Info.plist */; };
 		5D9DB50A1DBBE9A800C37158 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9DB5091DBBE9A800C37158 /* Message.swift */; };
 		5D9DB50C1DBD4FA200C37158 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9DB50B1DBD4FA200C37158 /* HelperFunctions.swift */; };
-		5DDEA32A1DC512F500E870EE /* IncomingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDEA3291DC512F500E870EE /* IncomingMessage.swift */; };
 		CF275176905ACBEB8A04A7C7 /* Pods_QuickChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0422551DCA1C74003BD21B /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		5D0422571DCD2DC6003BD21B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D4F5B451D3A7C3500DFB8E1 /* RecentsFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentsFunctions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -61,7 +64,6 @@
 		5D7BAB8E1D434F190086760B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D9DB5091DBBE9A800C37158 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Message.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D9DB50B1DBD4FA200C37158 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
-		5DDEA3291DC512F500E870EE /* IncomingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingMessage.swift; sourceTree = "<group>"; };
 		8893E3DC9FAE16BD5D826C08 /* Pods_QuickChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B5E4B1E8056D6D0BB30506 /* Pods-QuickChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.debug.xcconfig"; sourceTree = "<group>"; };
 		F80F0B6C5FFD27EED1E36708 /* Pods-QuickChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickChat/Pods-QuickChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */,
 				5D4F5B4C1D3C203000DFB8E1 /* ChooseUserViewController.swift */,
 				5D4F5B4E1D3E8E9800DFB8E1 /* ChatViewController.swift */,
+				5D0422571DCD2DC6003BD21B /* MapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -167,7 +170,7 @@
 			children = (
 				5D4F5B4A1D3AC24400DFB8E1 /* Recent.swift */,
 				5D9DB5091DBBE9A800C37158 /* Message.swift */,
-				5DDEA3291DC512F500E870EE /* IncomingMessage.swift */,
+				5D0422551DCA1C74003BD21B /* Camera.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				5D769EFF1D368ED800DCA6DC /* ProgressHUD.m in Sources */,
 				5D4F5B4B1D3AC24400DFB8E1 /* Recent.swift in Sources */,
 				5D769EF41D33FDCB00DCA6DC /* CustomTextField.swift in Sources */,
+				5D0422581DCD2DC6003BD21B /* MapViewController.swift in Sources */,
 				5D9DB50A1DBBE9A800C37158 /* Message.swift in Sources */,
 				5D769EEE1D33F7C500DCA6DC /* CustomButton.swift in Sources */,
 				5D769EE81D3122AB00DCA6DC /* WelcomeViewController.swift in Sources */,
@@ -357,8 +361,8 @@
 				5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */,
 				5D769EF21D33F9D300DCA6DC /* RegisterViewController.swift in Sources */,
 				5D769EF71D33FEF200DCA6DC /* BackendlessFunctions.swift in Sources */,
+				5D0422561DCA1C74003BD21B /* Camera.swift in Sources */,
 				5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */,
-				5DDEA32A1DC512F500E870EE /* IncomingMessage.swift in Sources */,
 				5D7BAB8D1D3EB2690086760B /* MessagesFunctions.swift in Sources */,
 				5D769EF01D33F9C600DCA6DC /* LoginViewController.swift in Sources */,
 				5D4F5B4F1D3E8E9800DFB8E1 /* ChatViewController.swift in Sources */,

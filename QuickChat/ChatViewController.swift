@@ -9,9 +9,12 @@
 import UIKit
 import JSQMessagesViewController
 import Firebase
+import IDMPhotoBrowser
 
-class ChatViewController: JSQMessagesViewController
+class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     var jsqMessages = [JSQMessage]()
     var messageObjects = [Message]()
     var loadedMessages = [Message]()
@@ -30,9 +33,9 @@ class ChatViewController: JSQMessagesViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
-        self.senderId = BackendlessFunctions.instance.CURRENT_USER?.objectId
-        self.senderDisplayName = BackendlessFunctions.instance.CURRENT_USER?.name
+        
+        self.senderId = BackendlessFunctions.CURRENT_USER.objectId
+        self.senderDisplayName = BackendlessFunctions.CURRENT_USER.name
         
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
@@ -41,7 +44,7 @@ class ChatViewController: JSQMessagesViewController
         
         self.LoadMessages()
     }
-
+    
     
     
     //MARK: JSQMessages/CollectionView Delegate Functions
@@ -53,15 +56,15 @@ class ChatViewController: JSQMessagesViewController
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
-        let message = self.jsqMessages[indexPath.row]
         
-        if message.senderId == BackendlessFunctions.instance.CURRENT_USER?.objectId //message is for current user
+        let message = self.jsqMessages[indexPath.row]
+        if message.senderId == BackendlessFunctions.CURRENT_USER.objectId //message is for current user
         {
-            cell.textView.textColor = UIColor.whiteColor()
+            cell.textView?.textColor = UIColor.whiteColor()
         }
         else
         {
-            cell.textView.textColor = UIColor.blackColor()
+            cell.textView?.textColor = UIColor.blackColor()
         }
         
         return cell
@@ -76,7 +79,7 @@ class ChatViewController: JSQMessagesViewController
     {
         
         let message = self.jsqMessages[indexPath.row]
-        if message.senderId == BackendlessFunctions.instance.CURRENT_USER?.objectId
+        if message.senderId == BackendlessFunctions.CURRENT_USER.objectId
         {
             return outgoingBubble
         }
@@ -100,8 +103,41 @@ class ChatViewController: JSQMessagesViewController
     }
     override func didPressAccessoryButton(sender: UIButton!)
     {
+        var messageType = ""
         
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let actionTakePhoto = UIAlertAction(title: "Take Photo", style: .Default) { (alertAction: UIAlertAction) in
+            
+            Camera.PresentCamera(self, canEdit: true)
+            
+        }
+        let actionSharePhoto = UIAlertAction(title: "Photo From Library", style: .Default) { (alertAction: UIAlertAction) in
+            
+            Camera.PresentPhotoLibrary(self, canEdit: true)
+            
+        }
+        let actionShareLocation = UIAlertAction(title: "Share Location", style: .Default) { (alertAction: UIAlertAction) in
+            
+            if HelperFunctions.IsUserHaveAccessToLocation()
+            {
+                messageType = MESSAGE_TYPE.Location.rawValue
+                self.SendMessage(NSDate(), textMessage: nil, pictureMessage: nil, locationMessage: messageType)
+            }
+            
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .Cancel) { (alertAction: UIAlertAction) in
+            print ("Cancel")
+        }
+        
+        alertController.addAction(actionTakePhoto)
+        alertController.addAction(actionSharePhoto)
+        alertController.addAction(actionShareLocation)
+        alertController.addAction(actionCancel)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
     
     
     
@@ -109,48 +145,80 @@ class ChatViewController: JSQMessagesViewController
     func SendMessage(date:NSDate, textMessage: String?, pictureMessage: UIImage?, locationMessage: String?)
     {
         var outgoingMessage: Message = Message()
+        let currentUser = BackendlessFunctions.CURRENT_USER
+        var messageType: String = ""
+        var deliverySatus: String = ""
+        
         
         if let text = textMessage //Send text message
         {
-            outgoingMessage = Message(messageText: text, senderID: BackendlessFunctions.instance.CURRENT_USER!.objectId , senderName: BackendlessFunctions.instance.CURRENT_USER!.name , messageDate: date, messageType: "Text", status: "Delivered")
+            messageType = MESSAGE_TYPE.Text.rawValue
+            deliverySatus = DELIVERY_STATUS.Delivered.rawValue
+            
+            outgoingMessage = Message(messageText: text, senderID: currentUser.objectId, senderName: currentUser.name , messageDate: date, messageType: messageType, status: deliverySatus)
         }
+        
+        
         if let picture = pictureMessage //Send picture message
         {
+            messageType = MESSAGE_TYPE.Image.rawValue
+            deliverySatus = DELIVERY_STATUS.Delivered.rawValue
             
+            let imageData = UIImageJPEGRepresentation(picture, 1.0) //Convert image to Data
+            let imageDataString = HelperFunctions.ConvertImageDataToString(imageData!) //Convert data to String
+            
+            outgoingMessage = Message(messageText: messageType, imageDataString: imageDataString, senderID: currentUser.objectId, senderName: currentUser.name, messageDate: date, messageType: messageType, status: deliverySatus)
         }
-        if let location = locationMessage //Send location message
+        
+        
+        if let _ = locationMessage //Send location message
         {
+            messageType = MESSAGE_TYPE.Location.rawValue
+            deliverySatus = DELIVERY_STATUS.Delivered.rawValue
             
+            let latitude: NSNumber = NSNumber(double: (self.appDelegate.coordinate!.latitude))
+            let longtitude: NSNumber = NSNumber(double: (self.appDelegate.coordinate!.longitude))
+            
+            outgoingMessage = Message(messageText: messageType, longtitude: longtitude, latitude: latitude, senderID: currentUser.objectId, senderName: currentUser.name, messageDate: date, messageType: messageType, status: deliverySatus)
         }
-    
+        
+        
         //Play message sent sound
         JSQSystemSoundPlayer.jsq_playMessageSentAlert()
         self.finishSendingMessage()
         
-        MessagesFunctions.instance.InsertToFirebase_SendMessage(self.chatroomID, message: outgoingMessage)
+        
+        MessagesFunctions.InsertToFirebase_Message(self.chatroomID, message: outgoingMessage)
     }
     
     
-    //MARK: Load messages
+    
+    //MARK: Load Messages
     func LoadMessages()
     {
-        MessagesFunctions.instance.FIREBASE_MESSAGES.child(self.chatroomID).observeSingleEventOfType(.Value) { (snapshotData: FIRDataSnapshot) in
+        //One time for load all messasges
+        MessagesFunctions.FIREBASE_MESSAGES.child(self.chatroomID).observeSingleEventOfType(.Value) { (snapshotData: FIRDataSnapshot) in
             
-            self.InsertMessage()
+            //loop through all loadedMessages and insert them as JSQMessage
+            for loadedMessage in self.loadedMessages
+            {
+                self.CreateJSQMessage(loadedMessage)
+            }
+            
             self.finishReceivingMessageAnimated(true)
             self.initialLoadCompleted = true
         }
         
-        MessagesFunctions.instance.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildAdded) { (snapshotData: FIRDataSnapshot) in
+        MessagesFunctions.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildAdded) { (snapshotData: FIRDataSnapshot) in
             
             if let value = snapshotData.value as? NSDictionary
             {
                 let message = Message(values: value)
                 if self.initialLoadCompleted
                 {
-                    self.InsertMessage(message)
-                    let isIncoming = self.IsIncoming(message)
-                    if isIncoming
+                    self.CreateJSQMessage(message) //insert the message data to JSQMessage
+                    
+                    if self.senderId != message.senderID //check if it is an incoming message
                     {
                         JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     }
@@ -161,47 +229,133 @@ class ChatViewController: JSQMessagesViewController
                     self.loadedMessages.append(message)
                 }
             }
-
+            
         }
         
-        MessagesFunctions.instance.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildRemoved) { (snapshotData: FIRDataSnapshot) in
+        
+        MessagesFunctions.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildRemoved) { (snapshotData: FIRDataSnapshot) in
             
             
         }
         
-        MessagesFunctions.instance.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildChanged) { (snapshotData: FIRDataSnapshot) in
+        MessagesFunctions.FIREBASE_MESSAGES.child(self.chatroomID).observeEventType(.ChildChanged) { (snapshotData: FIRDataSnapshot) in
             
             
         }
     }
-    
-    
-    //MARK: Helper functions
-    func InsertMessage()
+    func CreateJSQMessage(message: Message)
     {
-        for loadedMessage in self.loadedMessages
+        var jsqMessage: JSQMessage?
+        
+        let messageType = message.messageType
+        let senderName = message.senderName
+        let senderID = message.senderID
+        let messageText = message.messageText
+        let messageDate = HelperFunctions.DateFormatter().dateFromString(message.messageDate)
+        
+        
+        
+        if messageType == MESSAGE_TYPE.Text.rawValue
         {
-            self.InsertMessage(loadedMessage)
+            jsqMessage = JSQMessage(senderId: senderID, senderDisplayName: senderName, date: messageDate, text: messageText)
         }
-    }
-    func InsertMessage(message: Message)
-    {
-        let incomeMessage = IncomingMessage(collectionView: self.collectionView)
-        let jsqMessage = incomeMessage.CreateJSQMessage(message)
+        else if messageType == MESSAGE_TYPE.Location.rawValue
+        {
+            let longtitude = message.longtitude as Double
+            let latitude = message.latitude as Double
+            let clLocation = CLLocation(latitude: latitude, longitude: longtitude)
+            
+            
+            let mediaItem = JSQLocationMediaItem(location: nil)
+            mediaItem.appliesMediaViewMaskAsOutgoing = false
+            if senderID == BackendlessFunctions.CURRENT_USER.objectId
+            {
+                mediaItem.appliesMediaViewMaskAsOutgoing = true//outgoing message
+            }
+            
+            
+            mediaItem.setLocation(clLocation, withCompletionHandler: {
+                //update our collectionView to show the map in the message collection view
+                self.collectionView.reloadData()
+            })
+            
+            
+            jsqMessage = JSQMessage(senderId: senderID, senderDisplayName: senderName, date: messageDate, media: mediaItem)
+            
+        }
+        else if messageType == MESSAGE_TYPE.Image.rawValue
+        {
+            let mediaItem = JSQPhotoMediaItem(image: nil)
+            mediaItem.appliesMediaViewMaskAsOutgoing = false
+            if senderID == BackendlessFunctions.CURRENT_USER.objectId
+            {
+                mediaItem.appliesMediaViewMaskAsOutgoing = true//outgoing message
+            }
+            
+            HelperFunctions.ConvertStringToImage(message.imageDataString, completion: { (resultImage) in
+                mediaItem.image = resultImage
+                self.collectionView.reloadData()
+            })
+            
+            jsqMessage = JSQMessage(senderId: senderID, senderDisplayName: senderName, date: messageDate, media: mediaItem)
+            
+        }
+        
         
         self.messageObjects.append(message)
-        self.jsqMessages.append(jsqMessage!)
+        if let msg = jsqMessage
+        {
+            self.jsqMessages.append(msg)
+        }
+        
     }
-    func IsIncoming(item: Message) -> Bool
+    
+    
+    
+    //MARK: UIImagePickerController Delegate Functions
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
-        if self.senderId == item.senderID
+        
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        self.SendMessage(NSDate(), textMessage: nil, pictureMessage: image, locationMessage: nil)
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    //MARK: JSQMessage delegate function
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!)
+    {
+        let messageObject = self.messageObjects[indexPath.row]
+        let jsqMessage = self.jsqMessages[indexPath.row]
+        if messageObject.messageType == MESSAGE_TYPE.Image.rawValue
         {
-            return false
+            let mediaItem = jsqMessage.media as! JSQPhotoMediaItem
+            
+            let photos = IDMPhoto.photosWithImages([mediaItem.image])
+            let browserViewController = IDMPhotoBrowser(photos: photos)
+            
+            self.presentViewController(browserViewController, animated: true, completion: nil)
         }
-        else
+        else if messageObject.messageType == MESSAGE_TYPE.Location.rawValue
         {
-            return true
+            let mediaItem = jsqMessage.media as! JSQLocationMediaItem
+            let location = mediaItem.location
+            
+            self.performSegueWithIdentifier("SEGUE_MAP", sender: location)
         }
     }
-
+    
+    
+    //MARK: Segue Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "SEGUE_MAP"
+        {
+            let location = sender as! CLLocation
+            
+            let mapViewController = segue.destinationViewController as! MapViewController
+            mapViewController.location = location
+        }
+    }
 }
