@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5D0422561DCA1C74003BD21B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0422551DCA1C74003BD21B /* Camera.swift */; };
 		5D0422581DCD2DC6003BD21B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0422571DCD2DC6003BD21B /* MapViewController.swift */; };
+		5D04225A1DCE6C25003BD21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0422591DCE6C25003BD21B /* SettingsViewController.swift */; };
 		5D4F5B421D398A5700DFB8E1 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */; };
 		5D4F5B461D3A7C3500DFB8E1 /* RecentsFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B451D3A7C3500DFB8E1 /* RecentsFunctions.swift */; };
 		5D4F5B491D3ABDEC00DFB8E1 /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		5D0422551DCA1C74003BD21B /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		5D0422571DCD2DC6003BD21B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		5D0422591DCE6C25003BD21B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5D4F5B411D398A5700DFB8E1 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D4F5B451D3A7C3500DFB8E1 /* RecentsFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentsFunctions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5D4F5B481D3ABDEC00DFB8E1 /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecentsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -123,7 +125,6 @@
 			children = (
 				5D769F001D368EE600DCA6DC /* Helpers */,
 				5D769EF51D33FEE000DCA6DC /* Utilities */,
-				5D769EE01D2FBBB800DCA6DC /* Constants */,
 				5D769EEB1D3122BC00DCA6DC /* Model */,
 				5D769EEA1D3122B700DCA6DC /* Views */,
 				5D769EE91D3122B000DCA6DC /* Controllers */,
@@ -135,14 +136,6 @@
 			path = QuickChat;
 			sourceTree = "<group>";
 		};
-		5D769EE01D2FBBB800DCA6DC /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				5D769EE11D2FBBC700DCA6DC /* Constants.swift */,
-			);
-			name = Constants;
-			sourceTree = "<group>";
-		};
 		5D769EE91D3122B000DCA6DC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +145,7 @@
 				5D4F5B4C1D3C203000DFB8E1 /* ChooseUserViewController.swift */,
 				5D4F5B4E1D3E8E9800DFB8E1 /* ChatViewController.swift */,
 				5D0422571DCD2DC6003BD21B /* MapViewController.swift */,
+				5D0422591DCE6C25003BD21B /* SettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -188,6 +182,7 @@
 		5D769EF51D33FEE000DCA6DC /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5D769EE11D2FBBC700DCA6DC /* Constants.swift */,
 				5D769EF61D33FEF200DCA6DC /* BackendlessFunctions.swift */,
 				5D7BAB8C1D3EB2690086760B /* MessagesFunctions.swift */,
 				5D4F5B451D3A7C3500DFB8E1 /* RecentsFunctions.swift */,
@@ -350,6 +345,7 @@
 			files = (
 				5D769EFF1D368ED800DCA6DC /* ProgressHUD.m in Sources */,
 				5D4F5B4B1D3AC24400DFB8E1 /* Recent.swift in Sources */,
+				5D04225A1DCE6C25003BD21B /* SettingsViewController.swift in Sources */,
 				5D769EF41D33FDCB00DCA6DC /* CustomTextField.swift in Sources */,
 				5D0422581DCD2DC6003BD21B /* MapViewController.swift in Sources */,
 				5D9DB50A1DBBE9A800C37158 /* Message.swift in Sources */,

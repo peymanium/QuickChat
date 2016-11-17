@@ -8,16 +8,9 @@
 
 import Foundation
 
-enum MESSAGE_TYPE: String
-{
-    case Text
-    case Image
-    case Location
-}
-enum DELIVERY_STATUS: String
-{
-    case Delivered
-}
+
+
+
 
 class HelperFunctions
 {

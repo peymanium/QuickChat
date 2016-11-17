@@ -62,7 +62,7 @@ class ChooseUserViewController: UIViewController, UITableViewDelegate, UITableVi
         let user = self.users[indexPath.row]
         
         delegate.CreateChatroom(user)
-        
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

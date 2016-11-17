@@ -11,16 +11,27 @@ import MobileCoreServices
 
 class Camera
 {
-    static let imagePickerController = UIImagePickerController()
-    static let type = kUTTypeImage as String
+    var delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?
     
-    class func PresentPhotoLibrary(target: ChatViewController, canEdit: Bool)
+    let imagePickerController = UIImagePickerController()
+    let type = kUTTypeImage as String
+    
+    
+    init(delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?)
     {
+        self.delegate = delegate
+    }
+    
+    
+    func PresentPhotoLibrary(target: UIViewController, canEdit: Bool)
+    {
+        //if photolibrary not available
         if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) &&
             !UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum)
         {
             return;
         }
+        
         
         if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
         {
@@ -54,19 +65,20 @@ class Camera
         
         
         self.imagePickerController.allowsEditing = canEdit
-        self.imagePickerController.delegate = target
+        self.imagePickerController.delegate = self.delegate
         
         target.presentViewController(self.imagePickerController, animated: true, completion: nil)
         
     }
     
     
-    class func PresentCamera(target: ChatViewController, canEdit: Bool)
+    func PresentCamera(target: UIViewController, canEdit: Bool)
     {
         if !UIImagePickerController.isSourceTypeAvailable(.Camera)
         {
             return;
         }
+        
         
         if UIImagePickerController.isSourceTypeAvailable(.Camera)
         {
@@ -94,7 +106,7 @@ class Camera
             
             self.imagePickerController.allowsEditing = canEdit
             self.imagePickerController.showsCameraControls = true
-            self.imagePickerController.delegate = target
+            self.imagePickerController.delegate = self.delegate
             
             target.presentViewController(self.imagePickerController, animated: true, completion: nil)
         }

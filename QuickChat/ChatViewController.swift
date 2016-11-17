@@ -103,18 +103,20 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     override func didPressAccessoryButton(sender: UIButton!)
     {
+        let camera = Camera(delegate: self)
+        
         var messageType = ""
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let actionTakePhoto = UIAlertAction(title: "Take Photo", style: .Default) { (alertAction: UIAlertAction) in
             
-            Camera.PresentCamera(self, canEdit: true)
+            camera.PresentCamera(self, canEdit: true)
             
         }
         let actionSharePhoto = UIAlertAction(title: "Photo From Library", style: .Default) { (alertAction: UIAlertAction) in
             
-            Camera.PresentPhotoLibrary(self, canEdit: true)
+            camera.PresentPhotoLibrary(self, canEdit: true)
             
         }
         let actionShareLocation = UIAlertAction(title: "Share Location", style: .Default) { (alertAction: UIAlertAction) in

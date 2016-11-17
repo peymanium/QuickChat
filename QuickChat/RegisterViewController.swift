@@ -27,17 +27,11 @@ class RegisterViewController: UIViewController {
     {
         if let email = self.TXT_Email.text where email != "", let password = self.TXT_Password.text where password != "", let username = self.TXT_Username.text where username != ""
         {
-            let user = BackendlessUser()
-            user.email = email
-            user.password = password
-            user.name = username
-            user.setProperty("dateOfBirth", object: NSDate())
-            
-            BACKENDLESS_REF.userService.registering(user, response: { (registeredUser: BackendlessUser!) in
+            BackendlessFunctions.CreateUser(username, email: email, password: password, complition: { (user) in
                 
-                BackendlessFunctions.LoginUser(email, password: password, viewController: self, completion: { 
-                    
-                    ProgressHUD.showSuccess("User created successfully")
+                ProgressHUD.showSuccess("User created successfully")
+                
+                BackendlessFunctions.LoginUser(user.email, password: user.password, viewController: self, completion: {
                     
                     self.TXT_Username.text = ""
                     self.TXT_Password.text = ""
@@ -45,11 +39,7 @@ class RegisterViewController: UIViewController {
                     
                 })
                 
-            }) { (fault: Fault!) in
-                
-                ProgressHUD.showError("Error registering user \(email))")
-                
-            }
+            })
         }
         else
         {
