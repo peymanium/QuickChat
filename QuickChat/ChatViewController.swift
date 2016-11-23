@@ -142,6 +142,79 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     
     
+    //MARK: JSQMessage delegate function
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!)
+    {
+        let messageObject = self.messageObjects[indexPath.row]
+        let jsqMessage = self.jsqMessages[indexPath.row]
+        if messageObject.messageType == MESSAGE_TYPE.Image.rawValue
+        {
+            let mediaItem = jsqMessage.media as! JSQPhotoMediaItem
+            
+            let photos = IDMPhoto.photosWithImages([mediaItem.image])
+            let browserViewController = IDMPhotoBrowser(photos: photos)
+            
+            self.presentViewController(browserViewController, animated: true, completion: nil)
+        }
+        else if messageObject.messageType == MESSAGE_TYPE.Location.rawValue
+        {
+            let mediaItem = jsqMessage.media as! JSQLocationMediaItem
+            let location = mediaItem.location
+            
+            self.performSegueWithIdentifier("SEGUE_MAP", sender: location)
+        }
+    }
+    
+    
+    
+    //MARK: TimeStamp
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        
+        if indexPath.item % 3 == 0
+        {
+            let message = self.messageObjects[indexPath.item]
+            let messageDate = HelperFunctions.DateFormatter().dateFromString(message.messageDate)
+            
+            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(messageDate)
+        }
+        return nil
+        
+    }
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        if indexPath.item % 3 == 0
+        {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }
+        return 0.0
+        
+    }
+    //MARK: STATUS
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        
+        let message = self.messageObjects[indexPath.row]
+        let status = message.status
+        if indexPath.row == self.messageObjects.count - 1 //if last message
+        {
+            return NSAttributedString(string: status)
+        }
+        return NSAttributedString(string: "")
+        
+    }
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        if self.isOutgoingMessage(self.messageObjects[indexPath.row]) //if last message is outgoing
+        {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }
+        return 0.0
+        
+    }
+    
+
+    
+    
+    
     
     //MARK: Send Message
     func SendMessage(date:NSDate, textMessage: String?, pictureMessage: UIImage?, locationMessage: String?)
@@ -220,7 +293,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
                 {
                     self.CreateJSQMessage(message) //insert the message data to JSQMessage
                     
-                    if self.senderId != message.senderID //check if it is an incoming message
+                    if !self.isOutgoingMessage(message) //check if it is an incoming message
                     {
                         JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     }
@@ -324,30 +397,7 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    //MARK: JSQMessage delegate function
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!)
-    {
-        let messageObject = self.messageObjects[indexPath.row]
-        let jsqMessage = self.jsqMessages[indexPath.row]
-        if messageObject.messageType == MESSAGE_TYPE.Image.rawValue
-        {
-            let mediaItem = jsqMessage.media as! JSQPhotoMediaItem
-            
-            let photos = IDMPhoto.photosWithImages([mediaItem.image])
-            let browserViewController = IDMPhotoBrowser(photos: photos)
-            
-            self.presentViewController(browserViewController, animated: true, completion: nil)
-        }
-        else if messageObject.messageType == MESSAGE_TYPE.Location.rawValue
-        {
-            let mediaItem = jsqMessage.media as! JSQLocationMediaItem
-            let location = mediaItem.location
-            
-            self.performSegueWithIdentifier("SEGUE_MAP", sender: location)
-        }
-    }
-    
+
     
     //MARK: Segue Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
@@ -359,5 +409,15 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
             let mapViewController = segue.destinationViewController as! MapViewController
             mapViewController.location = location
         }
+    }
+    
+    
+    //Outgoing Function
+    func isOutgoingMessage(message: Message!) -> Bool {
+        if message.senderID == self.senderId
+        {
+            return true
+        }
+        return false
     }
 }

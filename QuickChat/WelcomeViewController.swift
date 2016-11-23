@@ -10,14 +10,17 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
+    let backendless = Backendless.sharedInstance()
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         //Automatically logs in if the user already logged in
-        BACKENDLESS_REF.userService.setStayLoggedIn(true)
-        if let user = BackendlessFunctions.CURRENT_USER
+        backendless.userService.setStayLoggedIn(true)
+        let currentUser = backendless.userService.currentUser
+        if currentUser != nil
         {
-            print ("Welcome user: \(user.name)")
+            print ("Welcome user: \(currentUser.name)")
             BackendlessFunctions.ShowChatViewController(self)
         }
     }

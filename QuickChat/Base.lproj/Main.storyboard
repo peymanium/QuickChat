@@ -324,19 +324,21 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbM-nU-ZAh">
-                                                    <rect key="frame" x="8" y="4" width="359" height="35"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOG OUT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8r3-97-7xA">
+                                                    <rect key="frame" x="8" y="14" width="359" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="YAB-dl-CX1"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                    <state key="normal" title="LOG OUT">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                </button>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="SbM-nU-ZAh" firstAttribute="leading" secondItem="qbI-mP-eF5" secondAttribute="leading" constant="8" id="b8N-zT-65w"/>
-                                                <constraint firstAttribute="trailing" secondItem="SbM-nU-ZAh" secondAttribute="trailing" constant="8" id="fCg-JX-YO2"/>
-                                                <constraint firstAttribute="bottom" secondItem="SbM-nU-ZAh" secondAttribute="bottom" constant="4" id="hcu-Qr-uTY"/>
-                                                <constraint firstItem="SbM-nU-ZAh" firstAttribute="top" secondItem="qbI-mP-eF5" secondAttribute="top" constant="4" id="ueT-Bb-oKS"/>
+                                                <constraint firstItem="8r3-97-7xA" firstAttribute="leading" secondItem="qbI-mP-eF5" secondAttribute="leadingMargin" id="1w9-Qz-s6s"/>
+                                                <constraint firstItem="8r3-97-7xA" firstAttribute="bottom" secondItem="qbI-mP-eF5" secondAttribute="bottomMargin" id="6tj-9y-PIa"/>
+                                                <constraint firstItem="8r3-97-7xA" firstAttribute="top" secondItem="qbI-mP-eF5" secondAttribute="topMargin" constant="6" id="M4b-bh-VDQ"/>
+                                                <constraint firstItem="8r3-97-7xA" firstAttribute="trailing" secondItem="qbI-mP-eF5" secondAttribute="trailingMargin" id="XCG-qo-yuQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -367,7 +369,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3408" y="493"/>
+            <point key="canvasLocation" x="3407.1999999999998" y="492.50374812593708"/>
         </scene>
         <!--Chats-->
         <scene sceneID="b92-LI-KfX">

@@ -184,7 +184,7 @@ class SettingsViewController: UITableViewController, UIImagePickerControllerDele
         
         let actionLogout = UIAlertAction(title: "Logout", style: .Destructive) { (alertAction: UIAlertAction) in
             
-            BACKENDLESS_REF.userService.logout()
+            BackendlessFunctions.BACKENDLESS_REF.userService.logout()
             
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let loginViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginView")
@@ -201,6 +201,7 @@ class SettingsViewController: UITableViewController, UIImagePickerControllerDele
     }
     
     
+    
     //MARK:UIImagePicketController
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
@@ -211,7 +212,7 @@ class SettingsViewController: UITableViewController, UIImagePickerControllerDele
         BackendlessFunctions.UploadAvatarImage(image) { (imageURL) in
             
             currentUser.setProperty("avatarImageURL", object: imageURL!)
-            BACKENDLESS_REF.userService.update(currentUser, response: { (updatedUser: BackendlessUser!) in
+            BackendlessFunctions.BACKENDLESS_REF.userService.update(currentUser, response: { (updatedUser: BackendlessUser!) in
                 
                 print ("User \(updatedUser.name) updated successfully")
                 

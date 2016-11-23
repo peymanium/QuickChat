@@ -8,17 +8,17 @@
 
 import Foundation
 
-let BACKENDLESS_REF = Backendless.sharedInstance()
-
 class BackendlessFunctions
 {
-    //static let instance = BackendlessFunctions()
-
     //MARK: Variables
-    static private var _currentUser = BACKENDLESS_REF.userService.currentUser
+    static var BACKENDLESS_REF : Backendless!
+    {
+        return Backendless.sharedInstance()
+    }
+    
     static var CURRENT_USER : BackendlessUser!
     {
-        return self._currentUser
+        return BACKENDLESS_REF.userService.currentUser
     }
     
     
@@ -28,8 +28,6 @@ class BackendlessFunctions
         ProgressHUD.show("Loading...")
         
         BACKENDLESS_REF.userService.login(email, password: password, response: { (loggedInUser : BackendlessUser!) in
-            
-            self._currentUser = loggedInUser
             
             completion() //To know if user logged in successully or not
             self.ShowChatViewController(viewController)
