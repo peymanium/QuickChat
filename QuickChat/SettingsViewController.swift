@@ -76,7 +76,7 @@ class SettingsViewController: UITableViewController, UIImagePickerControllerDele
         }
         
         //Save details in UserDefaults
-        
+        self.SetUserDefaults()
     }
     
     

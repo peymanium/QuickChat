@@ -13,6 +13,7 @@ import IDMPhotoBrowser
 
 class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var jsqMessages = [JSQMessage]()
@@ -25,11 +26,24 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     var initialLoadCompleted: Bool = false
     
+    //For avatar images
+    var avatarJSQMessageDictionary: NSMutableDictionary?
+    var avatarImageDictionary: NSMutableDictionary?
+    var showAvatar: Bool = false
+    var firstLoad: Bool?
+    
+    
     //Bubbles
     let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
     let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
     
     
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        self.LoadUserDefaults()
+    }
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -39,6 +53,22 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        
+        if self.userReceiver?.objectId == nil
+        {
+            BackendlessFunctions.GetBackendlessUser(self.recent?.userReceiverID, completion: { (user) in
+                self.userReceiver = user
+                self.title = user.name
+                self.GetAvatars()
+            })
+        }
+        else
+        {
+            self.title = self.userReceiver!.name
+            self.GetAvatars()
+        }
+        
+        
         
         self.inputToolbar.contentView.textView.placeHolder = "New Message..."
         
@@ -89,10 +119,38 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         }
         
     }
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!)
+    {
+        let messageObject = self.messageObjects[indexPath.row]
+        let jsqMessage = self.jsqMessages[indexPath.row]
+        if messageObject.messageType == MESSAGE_TYPE.Image.rawValue
+        {
+            let mediaItem = jsqMessage.media as! JSQPhotoMediaItem
+            
+            let photos = IDMPhoto.photosWithImages([mediaItem.image])
+            let browserViewController = IDMPhotoBrowser(photos: photos)
+            
+            self.presentViewController(browserViewController, animated: true, completion: nil)
+        }
+        else if messageObject.messageType == MESSAGE_TYPE.Location.rawValue
+        {
+            let mediaItem = jsqMessage.media as! JSQLocationMediaItem
+            let location = mediaItem.location
+            
+            self.performSegueWithIdentifier("SEGUE_MAP", sender: location)
+        }
+    }
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        
+        let message = self.jsqMessages[indexPath.row]
+        let avatarImageDataSource = self.avatarJSQMessageDictionary?.objectForKey(message.senderId) as! JSQMessageAvatarImageDataSource
+        
+        return avatarImageDataSource
+    }
     
     
     
-    //MARK: JSQMessage Delegate functions
+    //JSQMessage Buttons Delegate Functions
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!)
     {
         if text != ""
@@ -142,31 +200,6 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     
     
     
-    //MARK: JSQMessage delegate function
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!)
-    {
-        let messageObject = self.messageObjects[indexPath.row]
-        let jsqMessage = self.jsqMessages[indexPath.row]
-        if messageObject.messageType == MESSAGE_TYPE.Image.rawValue
-        {
-            let mediaItem = jsqMessage.media as! JSQPhotoMediaItem
-            
-            let photos = IDMPhoto.photosWithImages([mediaItem.image])
-            let browserViewController = IDMPhotoBrowser(photos: photos)
-            
-            self.presentViewController(browserViewController, animated: true, completion: nil)
-        }
-        else if messageObject.messageType == MESSAGE_TYPE.Location.rawValue
-        {
-            let mediaItem = jsqMessage.media as! JSQLocationMediaItem
-            let location = mediaItem.location
-            
-            self.performSegueWithIdentifier("SEGUE_MAP", sender: location)
-        }
-    }
-    
-    
-    
     //MARK: TimeStamp
     override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
         
@@ -210,9 +243,76 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
         return 0.0
         
     }
+
     
 
     
+    //MARK: Avatar Image Functions
+    func GetAvatars()
+    {
+        if self.showAvatar
+        {
+            collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(30, 30)
+            collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(30, 30)
+            
+            self.GetAvatarImageFromUser(BackendlessFunctions.CURRENT_USER)
+            self.GetAvatarImageFromUser(self.userReceiver!)
+            
+            self.CreateJSQMessageAvatar(self.avatarImageDictionary)
+        }
+    }
+    func GetAvatarImageFromUser(user: BackendlessUser)
+    {
+        if let imageURL = user.getProperty("avatarImageURL") as? String
+        {
+            BackendlessFunctions.DownloadAvatarImage(imageURL, complition: { (image) in
+                let avatarImageData = UIImageJPEGRepresentation(image!, 1.0)
+                
+                if self.avatarImageDictionary == nil
+                {
+                    self.avatarImageDictionary = [user.objectId : avatarImageData!]
+                }
+                else
+                {
+                    self.avatarImageDictionary?.removeObjectForKey(user.objectId)
+                    self.avatarImageDictionary?.setObject(avatarImageData!, forKey: user.objectId)
+                }
+                self.CreateJSQMessageAvatar(self.avatarImageDictionary)
+            })
+        }
+    }
+    func CreateJSQMessageAvatar(avatarImages : NSMutableDictionary?)
+    {
+        var currentUserJSQMessageAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "profile") , diameter: 70)
+        var userReceiverJSQMessageAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "profile"), diameter: 70)
+        
+        //For current User
+        if let avatars = avatarImages
+        {
+            if let avatarImageData = avatars.objectForKey(BackendlessFunctions.CURRENT_USER.objectId)
+            {
+                currentUserJSQMessageAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(data: avatarImageData as! NSData), diameter: 70)
+                
+                collectionView.reloadData()
+            }
+        }
+        
+        
+        //For UserReceiver
+        if let avatars = avatarImages
+        {
+            if let avatarImageData = avatars.objectForKey((self.userReceiver?.objectId)!)
+            {
+                userReceiverJSQMessageAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(data: avatarImageData as! NSData), diameter: 70)
+                
+                collectionView.reloadData()
+            }
+        }
+        
+        
+        self.avatarJSQMessageDictionary = [BackendlessFunctions.CURRENT_USER.objectId : currentUserJSQMessageAvatar, (self.userReceiver?.objectId)! : userReceiverJSQMessageAvatar]
+        
+    }
     
     
     
@@ -412,12 +512,32 @@ class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDele
     }
     
     
-    //Outgoing Function
+    //MARK: Outgoing Function
     func isOutgoingMessage(message: Message!) -> Bool {
         if message.senderID == self.senderId
         {
             return true
         }
         return false
+    }
+    
+    
+    
+    //MARK: UserDefaults Function
+    func SetUserDefaults()
+    {
+        self.userDefaults.setBool(true, forKey: kFIRSTRUN)
+        self.userDefaults.setBool(self.showAvatar, forKey: kAVATARSTATE)
+        self.userDefaults.synchronize()
+    }
+    func LoadUserDefaults()
+    {
+        self.firstLoad = self.userDefaults.boolForKey(kFIRSTRUN)
+        if !self.firstLoad! //if self.firstLoad is empty, its first time run
+        {
+            self.SetUserDefaults()
+        }
+        
+        self.showAvatar = self.userDefaults.boolForKey(kAVATARSTATE)
     }
 }

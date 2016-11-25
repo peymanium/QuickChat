@@ -60,4 +60,5 @@ class HelperFunctions
         return imageDataString
     }
     
+    
 }
